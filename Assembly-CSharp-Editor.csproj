@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2021_3_7;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;USE_SEARCH_TABLE;USE_SEARCH_MODULE;USE_PROPERTY_DATABASE;USE_SEARCH_EXTENSION_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER;NET_STANDARD_2_0;NET_STANDARD</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2021_3_7;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_INCLUDE_TESTS;USE_SEARCH_ENGINE_API;USE_SEARCH_TABLE;USE_SEARCH_MODULE;USE_PROPERTY_DATABASE;USE_SEARCH_EXTENSION_API;SCENE_TEMPLATE_MODULE;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;PHOTON_UNITY_NETWORKING;PUN_2_0_OR_NEWER;PUN_2_OR_NEWER;PUN_2_19_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER;NET_STANDARD_2_0;NET_STANDARD;DEVELOPMENT_BUILD</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -37,6 +37,11 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Editor\CreateLocatorHere.cs" />
+     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\Editor\ChatEditor.cs" />
+     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.172_manifest.txt" />
+     <None Include="Assets\Firebase\Editor\FirebaseAuth_version-9.3.0_manifest.txt" />
+     <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
+     <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Users\wjdtp\OneDrive\바탕 화면\유니티프로젝트\파일\2021.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -295,20 +300,65 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
         <HintPath>C:\Users\wjdtp\OneDrive\바탕 화면\유니티프로젝트\파일\2021.3.7f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.Auth">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Editor">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.PackageManagerResolver">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.PackageManagerResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.JarResolver">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.JarResolver.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Firebase.TaskExtension">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
     <Reference Include="log4netPlastic">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandlerImpl">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.VersionHandlerImpl.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandler">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Tasks">
+        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Compat">
+        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.IOSResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+        <HintPath>C:\coding\SquidGame\Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+        <HintPath>C:\coding\SquidGame\Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -750,6 +800,46 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{b847d54e-9c10-21e8-1e9c-7ac9d6756c4a}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.csproj">
+      <Project>{7885d31e-b9e4-3e7b-b833-d5d59898ea01}</Project>
+      <Name>PhotonUnityNetworking</Name>
+    </ProjectReference>
+    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
+      <Project>{afc0eb59-8369-461e-99e5-573a12e38b06}</Project>
+      <Name>PunDemos.DemoSlotcarEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
+      <Project>{da7d30f7-7d1a-9056-2130-3f8ac5f261c0}</Project>
+      <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
+      <Project>{c34ff3de-2bcb-6478-df39-5c0bb06e414b}</Project>
+      <Name>PhotonUnityNetworking.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
+      <Project>{3a214dc4-ac91-7e94-7258-b7012d85f4d3}</Project>
+      <Name>PhotonUnityNetworking.Demos</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonChat.csproj">
+      <Project>{2fafe655-da05-b3e7-a968-969eb56be212}</Project>
+      <Name>PhotonChat</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
+      <Project>{0ee13c69-4dd2-a4b2-47ac-0f8dca6ac589}</Project>
+      <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
+      <Project>{32c5bae8-8fc5-a8ff-6b3c-d1f103afbc35}</Project>
+      <Name>PhotonUnityNetworking.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
+      <Project>{08f8b3a6-7359-6e57-45ae-e8ba51bd17d0}</Project>
+      <Name>PunDemos.DemoHubEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonRealtime.csproj">
+      <Project>{be1a6bcd-e4bf-4d2d-6e7a-9bc5fb517ab6}</Project>
+      <Name>PhotonRealtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
