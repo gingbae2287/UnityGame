@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+using Photon.Pun;
+
+public class GameManager : MonoBehaviourPunCallbacks {
     private static GameManager instance;
     public static GameManager Instance{
         get{
@@ -11,8 +14,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    
+    public GameObject playerPrefab;
+
     public float fallingPoint{get; private set;}
     public Vector3 startPoint{get; private set;}
+
 
     void Awake(){
         if(instance==null){
@@ -20,8 +27,15 @@ public class GameManager : MonoBehaviour {
             DontDestroyOnLoad(this.gameObject);
         }
         else Destroy(this.gameObject);
+
     }
 
+    public int playerNumber{get; private set;}
+    int winnerPlayer;
+
+    public void SetPlayerNumber(int PlayerNumber){
+        playerNumber=PlayerNumber;
+    }
     public void SetFallingPoint(float height){
         fallingPoint=height;
     }
@@ -29,10 +43,17 @@ public class GameManager : MonoBehaviour {
         startPoint=StartPoint;
     }
 
-    public void GoalIn(){
-        UIManager.Instance.GoalIn();
-        Time.timeScale=0;
+
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Lobby");
     }
 
+    public void LeftRoom(){
+        //PhotonNetwork.LeaveRoom();
+        PhotonNetwork.Disconnect();
+    }
     
 }
+

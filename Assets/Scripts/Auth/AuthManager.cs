@@ -94,7 +94,7 @@ public class AuthManager : MonoBehaviour{
             // Firebase user has been created.
             user = task.Result;   
             Debug.Log("로그인 성공. Email: "+user.Email);
-            SceneManager.LoadScene("GlassBridge");
+            SceneManager.LoadScene("Lobby");
             
         });
         

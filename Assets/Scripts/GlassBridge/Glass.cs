@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Glass : MonoBehaviour
+public class Glass : MonoBehaviourPun
 {
-    bool hard;      //false = no collider
+    public bool hard;      //false = no collider
     BoxCollider col;
 
     void Awake(){
@@ -13,6 +14,7 @@ public class Glass : MonoBehaviour
     void Start(){
         
     }
+    /*
     public void SetHard(bool Hard){
         hard=Hard;
         if(hard==false){
@@ -20,4 +22,5 @@ public class Glass : MonoBehaviour
         }
         else col.enabled=true;
     }
+    */
 }

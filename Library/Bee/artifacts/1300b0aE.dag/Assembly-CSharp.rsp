@@ -385,6 +385,7 @@
 "Assets/Scripts/GlassBridge/Glass.cs"
 "Assets/Scripts/GlassBridge/GlassManager.cs"
 "Assets/Scripts/Goal/GoalZone.cs"
+"Assets/Scripts/SearchingRoom/NetworkManager.cs"
 "Assets/Scripts/UI/UIManager.cs"
 "Assets/unity-chan!/Unity-chan! Model/Scripts/AutoBlink.cs"
 "Assets/unity-chan!/Unity-chan! Model/Scripts/CameraController.cs"
