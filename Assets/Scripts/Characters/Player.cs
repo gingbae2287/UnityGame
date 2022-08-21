@@ -17,7 +17,7 @@ public class Player : MonoBehaviourPun
     float vert;     //vertical axes
     bool runState;
     bool jump;
-    int jumpCount=1;      //점프 횟수 제한
+    
 
     public int playerNumber{get; private set;}
     public string playerName{get; private set;}
@@ -26,6 +26,9 @@ public class Player : MonoBehaviourPun
     [SerializeField] float speed=0.1f;
     [SerializeField] float rotateSpeed=0.1f;
     [SerializeField] float jumpPower;
+    int jumpCount=1;      //점프 횟수 제한
+    float fallingPoint=-5;
+    
     Vector3 movement;  
 
     Rigidbody rigid; 
@@ -84,21 +87,19 @@ public class Player : MonoBehaviourPun
        
     }
     void Run(){
-        
-        
         if(hori==0 && vert==0) {
             if(runState) {
                 //변수값을 같은 값으로 변경하는 명령도 성능에 영향가는가?
                 runState=false;
-                anim.SetBool("RunState", false);
+                anim.SetInteger("RunState", 0);
             }
             return;
         }
         if(!runState) {
             runState=true;
-            anim.SetBool("RunState", true);
+            anim.SetInteger("RunState", 2);
         }
-        anim.SetBool("RunState", true);
+        anim.SetInteger("RunState", 2);
         movement.Set(hori, 0, vert);
         movement=movement.normalized*speed;
         rigid.MovePosition(transform.position+movement);
@@ -121,7 +122,7 @@ public class Player : MonoBehaviourPun
     }
 
     void CheckFall(){
-        if(transform.position.y<GameManager.Instance.fallingPoint){
+        if(transform.position.y<fallingPoint){
             transform.position=GameManager.Instance.startPoint;
         }
         /*
@@ -139,6 +140,14 @@ public class Player : MonoBehaviourPun
     public void SetPlayerName(string Name){
         if(!photonView.IsMine) return;
         playerName=Name;
+    }
+
+    public void GameSettingForPlayer(float Speed=0.1f, float JumpPower=200f, float FallingPoint=-5f){
+        if(!photonView.IsMine) return;
+        this.speed=Speed;
+        this.jumpPower=JumpPower;
+        this.fallingPoint=FallingPoint;
+
     }
 
     void AnimationUpdate(){

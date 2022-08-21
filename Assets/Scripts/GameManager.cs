@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     
-    public GameObject playerPrefab;
 
     public float fallingPoint{get; private set;}
     public Vector3 startPoint{get; private set;}
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     public int playerNumber{get; private set;}
-    int winnerPlayer;
 
     public void SetPlayerNumber(int PlayerNumber){
         playerNumber=PlayerNumber;

@@ -40,8 +40,10 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\Editor\ChatEditor.cs" />
      <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.172_manifest.txt" />
      <None Include="Assets\Firebase\Editor\FirebaseAuth_version-9.3.0_manifest.txt" />
+     <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-9.3.0_manifest.txt" />
      <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
      <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
+     <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
     <Reference Include="UnityEngine">
         <HintPath>C:\Users\wjdtp\OneDrive\바탕 화면\유니티프로젝트\파일\2021.3.7f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -314,6 +316,9 @@
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Database">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>

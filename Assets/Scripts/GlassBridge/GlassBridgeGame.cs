@@ -80,7 +80,8 @@ public class GlassBridgeGame : MonoBehaviourPun
         playerNumber=PhotonNetwork.LocalPlayer.ActorNumber;
         PlayerStartPoint+=new Vector3(playerNumber,0,0);
     
-        PhotonNetwork.Instantiate(GameManager.Instance.playerPrefab.name, PlayerStartPoint,Quaternion.identity);
+       PhotonNetwork.Instantiate("Character/TT_male", PlayerStartPoint,Quaternion.identity);
+       Player.LocalPlayerInstance.GameSettingForPlayer();
     }
 
     void CreateGlasses(){
