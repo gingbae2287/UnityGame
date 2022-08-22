@@ -31,9 +31,10 @@ public class GlassBridgeGame : MonoBehaviourPun
     Glass[,] glassScript;
 
     //player관련
+    int maxPlayer=12;
     int playerNumber;
     float FallingPoint=-5;
-    Vector3 PlayerStartPoint=new Vector3(-3,0.5f,0);
+    Vector3 startPoint;
     [SerializeField] Ranking ranking;
 
     void Awake(){
@@ -44,6 +45,7 @@ public class GlassBridgeGame : MonoBehaviourPun
             Destroy(instance.gameObject);
             instance=this;
         }
+        maxPlayer=GameManager.Instance.maxPlayerOfGlassBridge;
         if(!PhotonNetwork.IsMasterClient) return;
         glassScript= new Glass[2,lineCount];
         //CreateGlasses();
@@ -59,7 +61,6 @@ public class GlassBridgeGame : MonoBehaviourPun
         if(Player.LocalPlayerInstance==null) {
             
             SpawnPlayer();
-            GameSetting();
         }
     }
 
@@ -68,20 +69,19 @@ public class GlassBridgeGame : MonoBehaviourPun
     {
         
     }
-    void GameSetting(){
-        Debug.Log("세팅");
-        GameManager.Instance.SetFallingPoint(FallingPoint);
-        GameManager.Instance.SetStartPoint(PlayerStartPoint);
-        GameManager.Instance.SetPlayerNumber(playerNumber);
-        //GameManager.Instance.GameInit();
-    }
     void SpawnPlayer(){
+        for(int i=0;i<PhotonNetwork.PlayerList.Length;i++){
+            if(PhotonNetwork.LocalPlayer==PhotonNetwork.PlayerList[i]){
+                playerNumber=i;
+                break;
+            }
+        }
+        startPoint=new Vector3(maxPlayer*0.5f-playerNumber, 0, 0);
         
         playerNumber=PhotonNetwork.LocalPlayer.ActorNumber;
-        PlayerStartPoint+=new Vector3(playerNumber,0,0);
     
-       PhotonNetwork.Instantiate("Character/TT_male", PlayerStartPoint,Quaternion.identity);
-       Player.LocalPlayerInstance.GameSettingForPlayer();
+       PhotonNetwork.Instantiate("Character/TT_male", startPoint,Quaternion.identity);
+       Player.LocalPlayerInstance.GameSettingForPlayer(startPoint,FallingPoint);
     }
 
     void CreateGlasses(){

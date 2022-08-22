@@ -388,6 +388,7 @@
 "Assets/Scripts/GlassBridge/GlassBridgeGame.cs"
 "Assets/Scripts/GlassBridge/GoalZone.cs"
 "Assets/Scripts/Liar/LiarGame.cs"
+"Assets/Scripts/Liar/VoteZone.cs"
 "Assets/Scripts/Lobby/CustomRoom.cs"
 "Assets/Scripts/Lobby/ErrorMessage.cs"
 "Assets/Scripts/Lobby/Lobby.cs"

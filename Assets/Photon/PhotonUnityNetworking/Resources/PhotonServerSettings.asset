@@ -43,6 +43,9 @@ MonoBehaviour:
   - SetRanker
   - GoalInRpc
   - GoalInCallToMaster
+  - CheckMyNumber
+  - VoteRPC
+  - GameStartForPlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

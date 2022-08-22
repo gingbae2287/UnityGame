@@ -13,11 +13,16 @@ public class GameManager : MonoBehaviourPunCallbacks {
             return instance;
         }
     }
+    //===GlassBridge======
+    public int maxPlayerOfGlassBridge=12;
+    public int minPlayerOfGlassBridge=3;
 
-    
+    //===LiarGame==========
 
-    public float fallingPoint{get; private set;}
-    public Vector3 startPoint{get; private set;}
+    public int maxPlayerOfLiarGame=8;
+    public int minPlayerOfLiarGame=4;
+
+
 
 
     void Awake(){
@@ -28,21 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
         else Destroy(this.gameObject);
 
     }
-
-    public int playerNumber{get; private set;}
-
-    public void SetPlayerNumber(int PlayerNumber){
-        playerNumber=PlayerNumber;
-    }
-    public void SetFallingPoint(float height){
-        fallingPoint=height;
-    }
-    public void SetStartPoint(Vector3 StartPoint){
-        startPoint=StartPoint;
-    }
-
-
-
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("Lobby");

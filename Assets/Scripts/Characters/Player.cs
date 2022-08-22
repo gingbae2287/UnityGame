@@ -28,6 +28,7 @@ public class Player : MonoBehaviourPun
     [SerializeField] float jumpPower;
     int jumpCount=1;      //점프 횟수 제한
     float fallingPoint=-5;
+    Vector3 startPoint;
     
     Vector3 movement;  
 
@@ -60,7 +61,6 @@ public class Player : MonoBehaviourPun
             runState=false;
             jump=false;
         }
-        else   Debug.Log("viewID"+photonView.ViewID);
 
         gameEnd=false;
         playerNumber=PhotonNetwork.LocalPlayer.ActorNumber;
@@ -123,7 +123,7 @@ public class Player : MonoBehaviourPun
 
     void CheckFall(){
         if(transform.position.y<fallingPoint){
-            transform.position=GameManager.Instance.startPoint;
+            transform.position=startPoint;
         }
         /*
         */
@@ -142,11 +142,10 @@ public class Player : MonoBehaviourPun
         playerName=Name;
     }
 
-    public void GameSettingForPlayer(float Speed=0.1f, float JumpPower=200f, float FallingPoint=-5f){
+    public void GameSettingForPlayer(Vector3 pos, float FallingPoint=-5f){
         if(!photonView.IsMine) return;
-        this.speed=Speed;
-        this.jumpPower=JumpPower;
         this.fallingPoint=FallingPoint;
+        startPoint=pos;
 
     }
 
