@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 using Firebase;
 using Firebase.Database;
@@ -36,6 +37,7 @@ public class LiarGame : MonoBehaviourPun
     string title;
     bool isGameReady;
     IEnumerator cor;
+    int[] playerOrder;
     
     //===player setting
 
@@ -54,11 +56,13 @@ public class LiarGame : MonoBehaviourPun
         maxPlayer=GameManager.Instance.maxPlayerOfLiarGame;
         minPlayer=GameManager.Instance.minPlayerOfLiarGame;
         votePlayer=new int[maxPlayer];
+        playerOrder=new int[maxPlayer];
+
         titleList= new List<KeyValuePair<string,string>>();
-        VoteInit();
+        InitValue();
         isGameReady=false;
         
-            GetDB();
+        GetDB();
        
         
     }
@@ -75,7 +79,6 @@ public class LiarGame : MonoBehaviourPun
                     DataSnapshot snapshot=task.Result;
                     foreach(DataSnapshot category in snapshot.Children){
                         foreach(DataSnapshot title in category.Children){
-                            Debug.Log(category.Key+" "+ title.Value);
                             titleList.Add(new KeyValuePair<string, string>
                                     (category.Key,(string)title.Value)
                                 
@@ -90,9 +93,7 @@ public class LiarGame : MonoBehaviourPun
     }
     void Start(){
         VoteZonePosition=new Vector3(-9, 0, 9.5f);
-        if(Player.LocalPlayerInstance==null) {
-            SpawnPlayer();
-        }
+        RandomPlayerNumber();
         if(PhotonNetwork.IsMasterClient){
             cor=GameReadyCheck();
             StartCoroutine(cor);
@@ -102,17 +103,34 @@ public class LiarGame : MonoBehaviourPun
 
 
 
-
-    void SpawnPlayer(){
-        for(int i=0;i<PhotonNetwork.PlayerList.Length;i++){
-            if(PhotonNetwork.LocalPlayer==PhotonNetwork.PlayerList[i]){
-                playerNumber=i;
-                break;
-            }
+    void RandomPlayerNumber(){
+        if(!PhotonNetwork.IsMasterClient) return;
+        Debug.Log("random player num");
+        int currentPlayers=PhotonNetwork.PlayerList.Length;
+        for(int i=0;i<currentPlayers;i++){
+            int tmpPlayer=playerOrder[i];
+            int randomNum=Random.Range(0,currentPlayers);
+            playerOrder[i]=playerOrder[randomNum];
+            playerOrder[randomNum]=tmpPlayer;
+            
         }
+        for(int i=0;i<currentPlayers;i++){
+            Hashtable hash =new Hashtable();
+            hash.Add("playerNumber",i);
+            PhotonNetwork.PlayerList[playerOrder[i]].SetCustomProperties(hash);
+        }
+        photonView.RPC("SpawnPlayer", RpcTarget.AllBufferedViaServer);
+        
+    }
+    [PunRPC]
+    void SpawnPlayer(){
+
+        if(Player.LocalPlayerInstance!=null) return;
+        playerNumber=(int)PhotonNetwork.LocalPlayer.CustomProperties["playerNumber"];
+        Debug.Log("playernumber: "+playerNumber);
         startPoint=new Vector3(maxPlayer*0.5f-playerNumber, 0, 0);
-       PhotonNetwork.Instantiate("Character/TT_male",startPoint,Quaternion.identity);
-       Player.LocalPlayerInstance.GameSettingForPlayer(startPoint);
+        PhotonNetwork.Instantiate("Character/TT_male",startPoint,Quaternion.identity);
+        Player.LocalPlayerInstance.GameSettingForPlayer(startPoint);
 
         object[] data= new object[1];
         data[0]=playerNumber;
@@ -120,18 +138,28 @@ public class LiarGame : MonoBehaviourPun
         Vector3 zonePos=VoteZonePosition+(new Vector3(6*(playerNumber%4),0,(-19)*(playerNumber/4)));
         PhotonNetwork.Instantiate(VoteZoneName,zonePos, Quaternion.identity,0,data);
     }
+    
 
-    void VoteInit(){
+    void InitValue(){
         isVote=false;
+        int currentPlayers=PhotonNetwork.PlayerList.Length;
         if(!PhotonNetwork.IsMasterClient) return;
         for(int i=0;i<maxPlayer;i++){
             votePlayer[i]=-1;
+        }
+        for(int i=0;i<maxPlayer;i++){
+            if(i<currentPlayers){
+                playerOrder[i]=i;
+            }
+            else playerOrder[i]=-1;
         }
     }
 
     public void VotePlayer(int PlayerNumber, int VoteNumber){
         votePlayer[PlayerNumber]=VoteNumber;
     }
+
+    
 
     void GameStart(){
         if(!PhotonNetwork.IsMasterClient) return;
@@ -153,6 +181,10 @@ public class LiarGame : MonoBehaviourPun
         title=Title;
         categoryObj.text="카테고리: "+category;
         titleObj.text="주제: "+title;
+    }
+
+    public void LobbyButton(){
+        GameManager.Instance.LeftRoom();
     }
 }
 

@@ -144,6 +144,22 @@ public class AuthManager : MonoBehaviour{
         
     }
 
+    void GuestLogin(){
+        firebaseAuth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task => {
+            if (task.IsCanceled) {
+                Debug.LogError("SignInAnonymouslyAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted) {
+                Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            user = task.Result;
+            SceneManager.LoadScene("Lobby");
+        });
+    }
+
     public void ChangeToSignUp(){
         if(IsSignInOnProgress) return;
         UI_SignIn.SetActive(false);
@@ -157,6 +173,9 @@ public class AuthManager : MonoBehaviour{
     void SetUserNameUI(){
         UI_SignIn.SetActive(false);
         SetUserNameObj.SetActive(true);
+    }
+    public void GuestLoginButton(){
+        GuestLogin();
     }
     public bool SetUserName(string Name){
         bool isUserNameSet=false;
