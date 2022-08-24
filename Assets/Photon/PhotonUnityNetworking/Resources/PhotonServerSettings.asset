@@ -34,19 +34,23 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AnnouncementRPC
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - SetWinnerPlayer
-  - SetRanker
-  - GoalInRpc
   - GoalInCallToMaster
-  - CheckMyNumber
-  - VoteRPC
-  - GameStartForPlayers
+  - GoalInRpc
+  - NextPlayerTurn
+  - ReadExplanation
+  - RespawnSpaceship
+  - SetTitleText
   - SpawnPlayer
+  - TimerRPC
+  - VoteRPC
+  - CheckAnswer
+  - LiarAnswerTime
+  - RestartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

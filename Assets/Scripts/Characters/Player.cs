@@ -165,9 +165,9 @@ public class Player : MonoBehaviourPun
     }
     private void OnTriggerExit(Collider other) {
         if(!photonView.IsMine) return;
-        if(other.gameObject.tag=="Ground"){
+        /*if(other.gameObject.tag=="Ground"){
                 jump=true;
-        }
+        }*/
     }
 
 }
