@@ -55,6 +55,7 @@
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Scripts\RandomWind.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Scripts\IKCtrlRightHand.cs" />
+     <Compile Include="Assets\Scripts\Liar\LiarUI.cs" />
      <Compile Include="Assets\Scripts\Lobby\ErrorMessage.cs" />
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Scripts\IdleChanger.cs" />
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Scripts\ThirdPersonCamera.cs" />
@@ -70,6 +71,7 @@
      <Compile Include="Assets\Scripts\Auth\AuthManager.cs" />
      <Compile Include="Assets\Scripts\Auth\SignIn.cs" />
      <Compile Include="Assets\Scripts\Lobby\NetworkManager.cs" />
+     <Compile Include="Assets\Scripts\Liar\ExplanationBox.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
      <Compile Include="Assets\Scripts\Lobby\PlayerInfoInLobby.cs" />
      <Compile Include="Assets\Scripts\GlassBridge\GoalZone.cs" />
@@ -82,15 +84,15 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
      <Compile Include="Assets\Scripts\Lobby\Lobby.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
+     <Compile Include="Assets\Simple Helvetica\SimpleHelvetica.cs" />
      <Compile Include="Assets\unity-chan!\Unity-chan! Model\Scripts\SpringBone.cs" />
-     <Compile Include="Assets\Scripts\Liar\LiarUI.cs" />
-     <Compile Include="Assets\Scripts\Liar\ExplanationBox.cs" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+     <None Include="Assets\Simple Helvetica\readme.txt" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
      <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
      <None Include="Assets\unity-chan!\Unity-chan! Model\Art\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />

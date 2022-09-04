@@ -51,6 +51,13 @@ MonoBehaviour:
   - CheckAnswer
   - LiarAnswerTime
   - RestartGame
+  - ClearHistoryBox
+  - PunSetActive
+  - SendList
+  - GameStartRPC
+  - TimerSynchronization
+  - VoteEnded
+  - VoteZoneCreateRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

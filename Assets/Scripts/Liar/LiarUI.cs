@@ -53,6 +53,10 @@ public class LiarUI : MonoBehaviour{
         explanationBox.gameObject.SetActive(false);
         return str;
     }
+    public void ClearHistoryBox(){
+        historyBox.ClearHistoryBox();
+    }
+
 
     public void LobbyButton(){
         GameManager.Instance.LeftRoom();

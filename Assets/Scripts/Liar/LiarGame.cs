@@ -10,7 +10,7 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
 
-public class LiarGame : MonoBehaviourPun
+public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
 {
     //Vector3[] startPoint;
 
@@ -21,25 +21,38 @@ public class LiarGame : MonoBehaviourPun
             else return instance;
         }
     }
-    //==obejct==
+    //==class==
     [SerializeField] LiarUI liarUI;
 
     //===game setting==
     int maxPlayer=8, minPlayer=4;
     float fallingPoint=-5f;
-    string VoteZoneName="Liar/VoteZone";
-    Vector3 VoteZonePosition;
-    string category;
-    string title;
+    string VoteZonePath="Liar/VoteZone";
+    Vector3 VoteZonePosition=new Vector3(-9, 0, 9.5f);
+    string category,title;
     IEnumerator cor;
+    enum GameState{ //room's custom property
+        DBLoading,  //0 complete title db loading and set random title
+        SetLiar,    //1 mix players order and set liar player => gameready and start count
+        StartCount,
+        Gaming,     //2 each player explane title 
+        VoteTime,   //3 vote time
+        OneMoreTurn,    //4 End vote time, notice result
+        AnswerTime,
+        Waiting,    //5 wait game restart
+    }
+    
+    GameState gameState;
+    Hashtable state;
     //===for masterClient====
     int[] playerOrder;
-    int currentOrder, timer;
-    bool isGameReady, isAnswerTime;
+    int currentOrder, timer, voteResult, currentPlayers;
+    bool isDBLoading, DBLoad, isGameReady, isAnswerTime, isPlaying, isReadExplanation, isVoteEnd, isVoteZoneCreate;
     DatabaseReference DBTitle;
     List<KeyValuePair<string,string>> titleList;
     int[] votePlayer;   //idx: playernumber, value: voted playernumber
     int[] voteCount;    //how many count voted for other players
+    GameObject[] voteZones;
     
     //===player setting
 
@@ -59,78 +72,284 @@ public class LiarGame : MonoBehaviourPun
         }
         maxPlayer=GameManager.Instance.maxPlayerOfLiarGame;
         minPlayer=GameManager.Instance.minPlayerOfLiarGame;
+        voteZones=new GameObject[maxPlayer];
         votePlayer=new int[maxPlayer];
         voteCount=new int[maxPlayer];
         playerOrder=new int[maxPlayer];
-
         titleList= new List<KeyValuePair<string,string>>();
+        state=new Hashtable();
+        gameState=GameState.DBLoading;
+        state.Add("gameState", gameState);
+        isDBLoading=false; DBLoad=false; isGameReady=false; isVoteZoneCreate=false;
+
+        for(int i=0;i<maxPlayer;i++) votePlayer[i]=-1;
+
         InitValue();
-        isGameReady=false;
-        
-        GetDB();
+        if(PhotonNetwork.IsMasterClient) {
+            PhotonNetwork.KeepAliveInBackground=3f;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+            GetDB();
+            //game state
+        }
        
         
     }
     //DB for title
     void GetDB(){
-        if(PhotonNetwork.IsMasterClient){
-            DBTitle=FirebaseDatabase.DefaultInstance.GetReference("LiarGameTitle");
-            DBTitle.GetValueAsync().ContinueWithOnMainThread(task => {
-                if (task.IsFaulted) {
-                    Debug.LogError("error GetValueAsync()");
-                    return;
-                }
-                else if (task.IsCompleted) {
-                    DataSnapshot snapshot=task.Result;
-                    foreach(DataSnapshot category in snapshot.Children){
-                        foreach(DataSnapshot title in category.Children){
-                            titleList.Add(new KeyValuePair<string, string>
-                                    (category.Key,(string)title.Value)
-                                
-                            );
-                        }
+        if(!PhotonNetwork.IsMasterClient) return;
+        if(isDBLoading||DBLoad) return;
+        isDBLoading=true;
+        DBTitle=FirebaseDatabase.DefaultInstance.GetReference("LiarGameTitle");
+        DBTitle.GetValueAsync().ContinueWithOnMainThread(task => {
+            if (task.IsFaulted) {
+                isDBLoading=false; DBLoad=false;
+                Debug.LogError("error GetValueAsync()");
+                return;
+            }
+            else if (task.IsCompleted) {
+                DataSnapshot snapshot=task.Result;
+                foreach(DataSnapshot category in snapshot.Children){
+                    foreach(DataSnapshot title in category.Children){
+                        titleList.Add(new KeyValuePair<string, string>
+                                (category.Key,(string)title.Key)
+                        );
                     }
-                    isGameReady=true;
-
                 }
-            });
-        }
+                Debug.Log("dbload is truer");
+                //isGameReady=true;
+                DBLoad=true;
+                //photonView.RPC("SendList", RpcTarget.AllBufferedViaServer, titleList);
+                
+            }
+        });
+    }
+    [PunRPC]
+    void SendList(List<KeyValuePair<string, string>> TitleList){
+        //list안보내짐
+        Debug.Log("db send RPC");
+        titleList=TitleList;
+
+        
     }
     void InitValue(){
-        isVote=false;
-        isAnswerTime=false;
-        liarPlayer=0;
-        int currentPlayers=PhotonNetwork.PlayerList.Length;
-        
-        if(!PhotonNetwork.IsMasterClient) return;
-        currentOrder=0;
+        isVote=false; isLiar=false; isAnswerTime=false; isPlaying=false; isVoteEnd=false;
+        liarPlayer=0; currentOrder=0; voteResult=0;
+        title=""; category="";
         for(int i=0;i<maxPlayer;i++){
-            votePlayer[i]=-1;
+            //votePlayer[i]=-1;
             voteCount[i]=0;
-        }
-        for(int i=0;i<maxPlayer;i++){
-            if(i<currentPlayers){
+            if(i<PhotonNetwork.PlayerList.Length){
                 playerOrder[i]=i;
             }
             else playerOrder[i]=-1;
         }
     }
-    void Start(){
-        VoteZonePosition=new Vector3(-9, 0, 9.5f);
-        RandomPlayerNumber();
-        if(PhotonNetwork.IsMasterClient){
-            cor=GameReadyCheck();
-            StartCoroutine(cor);
-        }
 
-        
+    void Start(){
+        if(PhotonNetwork.IsMasterClient){
+            cor=GameStateCheck();
+            StartCoroutine(cor);
+
+            CreateVoteZone();
+        }
     }
 
-
-
-    void RandomPlayerNumber(){
+    void CreateVoteZone(){
         if(!PhotonNetwork.IsMasterClient) return;
-        int currentPlayers=PhotonNetwork.PlayerList.Length;
+        for(int i=0;i<maxPlayer;i++){
+            object[] data= new object[1];
+            data[0]=i;
+            Vector3 zonePos=VoteZonePosition+(new Vector3(6*(i%4),0,(-19)*(i/4)));
+            voteZones[i]=PhotonNetwork.InstantiateRoomObject(VoteZonePath,zonePos, Quaternion.identity,0,data);
+            voteZones[i].SetActive(false);
+        }
+        photonView.RPC("VoteZoneCreateRPC", RpcTarget.AllViaServer);
+    }
+
+    [PunRPC]
+    void VoteZoneCreateRPC(){
+        isVoteZoneCreate=true;
+    }
+    IEnumerator GameStateCheck(){
+        //게임 진행
+       if(!PhotonNetwork.IsMasterClient) StopCoroutine(cor);
+
+        while(!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("gameState")){
+                yield return new WaitForSeconds(0.1f);
+        }
+        
+        string str;
+        while(true){
+            switch(gameState){
+            case GameState.DBLoading:
+                if(!(isDBLoading||DBLoad)) GetDB();
+                while(!DBLoad){
+                    yield return new WaitForSeconds(0.2f);
+                }
+                gameState=GameState.SetLiar;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                
+            break;
+            case GameState.SetLiar:
+            Debug.Log("GameStete: setliar");
+                if(!DBLoad){
+                    gameState=GameState.DBLoading;
+                    break;
+                }
+                if(isPlaying){
+                    timer=10;
+                    gameState=GameState.Gaming;
+                    break;
+                }
+                RandomPlayerNumber();      //set players order and Liar
+                bool checkPlayerSpawn=false;
+                while(!checkPlayerSpawn){   //check all player are spawn
+                    checkPlayerSpawn=true;
+                    for(int i=0;i<PhotonNetwork.PlayerList.Length;i++){
+                        if(!PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("isSpawn")){
+                            checkPlayerSpawn=false;
+                            break;
+                        }
+                        else if(!(bool)PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("isSpawn")){
+                            checkPlayerSpawn=false;
+                            break;
+                        }
+                    }
+                    yield return new WaitForSeconds(0.1f);
+                }
+                GameStart();
+                while(!isPlaying) yield return new WaitForSeconds(0.1f);
+
+                gameState=GameState.StartCount;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                timer=3;
+                
+            break;
+            case GameState.StartCount:
+            Debug.Log("GameStete: startcount");
+                //Start Timer
+                while(timer>0){
+                    str=timer+"초 후 게임이 시작됩니다.";
+                    photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+                    yield return new WaitForSeconds(1f);
+                    timer--;
+                }
+                str="Game Start!";
+                photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+                yield return new WaitForSeconds(1f);
+                gameState=GameState.Gaming;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                timer=10;
+                
+            break;
+            case GameState.Gaming:
+            Debug.Log("GameStete: Gaming");
+            //각 플레이어가 제시어 설명을 할 때마다 currentorder증가
+            //각 플레이어는 제출 버튼시 마스터에게 rpc보내기
+                photonView.RPC("ClearHistoryBox",RpcTarget.AllViaServer);
+                while(currentOrder<currentPlayers){
+                    photonView.RPC("NextPlayerTurn",RpcTarget.AllViaServer,currentOrder);
+                    isReadExplanation=false;
+                    while(timer>=0 && !isReadExplanation){
+                        photonView.RPC("TimerRPC",RpcTarget.AllViaServer,timer);
+                        yield return new WaitForSeconds(1f);
+                        timer--;
+                    }
+                    timer=10;
+                    currentOrder++;
+                }
+                gameState=GameState.VoteTime;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                timer=15;
+
+            break;
+            case GameState.VoteTime:
+            Debug.Log("GameStete: vote time");
+                if(!isVoteEnd){
+                    while(timer>=0){
+                        str="라이어로 생각되는 플레이어의 발판에 들어가 투표하세요.\n";
+                        str+="남은시간 "+timer+"초";
+                        photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+                        yield return new WaitForSeconds(1f);
+                        timer--;
+                    }
+                    voteResult=VoteCheck();
+                }
+                
+                if(voteResult==1){  // 미투표자가 과반수 이상. 한바퀴 더 돈다.
+                    timer=5;
+                    gameState=GameState.OneMoreTurn;
+                    state["gameState"]=gameState;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                }
+                else if (voteResult==2){
+                    //라이어가 누군지 맞췄을때
+                    timer=15;
+                    gameState=GameState.AnswerTime;
+                    state["gameState"]=gameState;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                }
+                else if( voteResult==3){
+                    //라이어를 못찾았을때
+                    timer=5;
+                    gameState=GameState.Waiting;
+                    state["gameState"]=gameState;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                }
+            break;
+            case GameState.OneMoreTurn:
+            Debug.Log("GameStete: onemore turn");
+                photonView.RPC("VoteEnded",RpcTarget.AllBufferedViaServer,0, false);
+                while(timer>=0){
+                        yield return new WaitForSeconds(1f);
+                        timer--;
+                }
+                gameState=GameState.Gaming;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+                timer=10;
+                
+            break;
+            case GameState.AnswerTime:
+            Debug.Log("GameStete: answertime");
+                while(isAnswerTime && timer>=0){
+                    photonView.RPC("TimerRPC",RpcTarget.AllViaServer,timer);
+                    timer--;
+                    yield return new WaitForSeconds(1f);
+                }
+                timer=5;
+                gameState=GameState.Waiting;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+
+            break;
+            case GameState.Waiting:
+            Debug.Log("GameStete: waiting");
+                while(timer>=0){
+                    yield return new WaitForSeconds(1f);
+                    timer--;
+                }
+                photonView.RPC("RestartGame",RpcTarget.AllViaServer);
+
+                gameState=GameState.SetLiar;
+                state["gameState"]=gameState;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+            break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+    }
+    // GameState.SetLiar
+    void RandomPlayerNumber(){
+        //플레이어 순서 섞기
+        if(!PhotonNetwork.IsMasterClient) return;
+        currentPlayers=PhotonNetwork.PlayerList.Length;
+        //int currentPlayers=PhotonNetwork.PlayerList.Length;
         for(int i=0;i<currentPlayers;i++){
             int tmpPlayer=playerOrder[i];
             int randomNum=Random.Range(0,currentPlayers);
@@ -138,84 +357,76 @@ public class LiarGame : MonoBehaviourPun
             playerOrder[randomNum]=tmpPlayer;
             
         }
+        //라이어 정하기
         liarPlayer=Random.Range(0,currentPlayers);
         for(int i=0;i<currentPlayers;i++){
             Hashtable hash =new Hashtable();
             hash.Add("playerNumber",i);
-            if(i==liarPlayer) hash.Add("isLiar", true);
+            if(i==liarPlayer) 
+            {
+                hash.Add("isLiar", true);
+            }
             else hash.Add("isLiar", false);
             PhotonNetwork.PlayerList[playerOrder[i]].SetCustomProperties(hash);
+
         }
-        photonView.RPC("SpawnPlayer", RpcTarget.AllBufferedViaServer);
+        photonView.RPC("SpawnPlayer", RpcTarget.AllBufferedViaServer,playerOrder,liarPlayer, currentPlayers);
         
     }
     [PunRPC]
-    void SpawnPlayer(){
+    void SpawnPlayer(int[] PlayerOrder, int liar, int CurrentPlayers){
+        liarPlayer=liar;
+        playerOrder=PlayerOrder;
+        currentPlayers=CurrentPlayers;
+        //플레이어 스폰 또는 플레이어번호, 라이어 변경
         playerNumber=(int)PhotonNetwork.LocalPlayer.CustomProperties["playerNumber"];
         isLiar=(bool)PhotonNetwork.LocalPlayer.CustomProperties["isLiar"];
+
         if(Player.LocalPlayerInstance!=null) return;
-        Debug.Log("playernumber: "+playerNumber);
         startPoint=new Vector3(maxPlayer*0.5f-playerNumber, 0, 0);
         PhotonNetwork.Instantiate("Character/TT_male",startPoint,Quaternion.identity);
         Player.LocalPlayerInstance.GameSettingForPlayer(startPoint);
 
-        object[] data= new object[1];
-        data[0]=playerNumber;
-        //votezone
-        Vector3 zonePos=VoteZonePosition+(new Vector3(6*(playerNumber%4),0,(-19)*(playerNumber/4)));
-        PhotonNetwork.Instantiate(VoteZoneName,zonePos, Quaternion.identity,0,data);
+        Hashtable hash=new Hashtable();
+        hash.Add("isSpawn",true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
+    //투표존에 들어갔을때 호출
     
-
-    
-
-    public void VotePlayer(int PlayerNumber, int VoteNumber){
-        if(!PhotonNetwork.IsMasterClient) return;
-        votePlayer[PlayerNumber]=VoteNumber;
-    }
-
-    
-
     void GameStart(){
         if(!PhotonNetwork.IsMasterClient) return;
+        if(isPlaying) return;
         int idx=Random.Range(0,titleList.Count);
         category=titleList[idx].Key;
         title=titleList[idx].Value;
-        photonView.RPC("SetTitleText",RpcTarget.AllBufferedViaServer,category,title);
-        Debug.Log("주제어 재설정");
-    }
-    IEnumerator GameReadyCheck(){
-        while(!isGameReady){
-            yield return new WaitForSeconds(0.1f);
-        }
-        GameStart();
-        int i=3;
-        string str;
-        while(i>0){
-            str=i+"초 후 게임이 시작됩니다.";
-            photonView.RPC("AnnouncementRPC",RpcTarget.AllBufferedViaServer,str);
-            yield return new WaitForSeconds(1f);
-            i--;
-        }
-        str="Game Start!";
-        photonView.RPC("AnnouncementRPC",RpcTarget.AllBufferedViaServer,str);
-        yield return new WaitForSeconds(1f);
-        photonView.RPC("NextPlayerTurn",RpcTarget.AllViaServer,currentOrder);
+        //active votezone
+        for(int i=0;i<maxPlayer;i++) voteZones[i].SetActive(false);
+        for(int i=0;i<PhotonNetwork.PlayerList.Length;i++) voteZones[i].SetActive(true);
+        isPlaying=true;
+        photonView.RPC("GameStartRPC",RpcTarget.AllViaServer,category,title);
     }
     [PunRPC]
-    void SetTitleText(string Category, string Title){
+    void GameStartRPC(string Category, string Title){
+        category=Category; title=Title;
         liarUI.SetTitleText(Category,Title,isLiar);
+        isPlaying=true;
     }
-    [PunRPC]
+
+    public void VotePlayer(int PlayerNumber, int VoteNumber){
+        //if(!PhotonNetwork.IsMasterClient) return;
+        votePlayer[PlayerNumber]=VoteNumber;
+    }
+    [PunRPC]    //공지메세지 변경
     void AnnouncementRPC(string str){
         liarUI.SetAnnouncement(str);
     }
+    // GameState: Gaming
     [PunRPC]
     void NextPlayerTurn(int CurrentOrder){
         liarUI.ClearAnnouncment();
-        string str;
+        currentOrder=CurrentOrder;
         if(playerNumber==CurrentOrder){
-            
+            string str;
             if(isLiar) {
                 str="제시어를 추측하세요.\n";
                 str+="라이어임을 들키지 않게 제시어에 관한 말을 하세요.";
@@ -223,88 +434,66 @@ public class LiarGame : MonoBehaviourPun
             else str="제시어에 관해 하고싶은 말을 제출하세요.";
             liarUI.PlayerTurn(str);
         }
-        if(PhotonNetwork.IsMasterClient){
-            cor=TurnTimer();
-            StartCoroutine(cor);
-        }
     }
     [PunRPC]
-    void TimerRPC(int CurrentOrder, int sec){
+    void TimerRPC(int sec){
         string str;
-        if(playerNumber!=CurrentOrder)
-            str=(CurrentOrder+1)+"번 플레이어 차례입니다.\n남은시간: "+sec+"초";
-        else 
-        {
-            if(sec<=0) SubmitExplanationButton();
-            str="남은시간: "+sec+"초";
+        if(isAnswerTime){
+            if(isLiar){
+                if(sec<=0) {
+                    SubmitExplanationButton();   //타임아웃시 자동 제출
+                    str="시간초과";
+                }   
+                else str="남은시간: "+sec+"초";
+            }
+            else{
+                str="라이어가 정답을 맞추고 있습니다.\n남은시간: "+sec+"초";
+            }
+        }
+        else{
+            if(playerNumber!=currentOrder)
+                str=(currentOrder+1)+"번 플레이어 차례입니다.\n남은시간: "+sec+"초";
+            else 
+            {
+                if(sec<=0) {
+                    SubmitExplanationButton();   //타임아웃시 자동 제출
+                    str="시간초과";
+                }
+                else str="남은시간: "+sec+"초";
+            }
         }
         liarUI.SetAnnouncement(str);
     }
-
-    IEnumerator TurnTimer()
-    {   
-        //for master client
-        int i=30;
-        while(i>=0){
-            string str="제한시간 "+i+"초";
-            photonView.RPC("TimerRPC",RpcTarget.AllBufferedViaServer,currentOrder, i);
-            yield return new WaitForSeconds(1f);
-            i--;
-        }
-
-    }
-    public void SubmitExplanationButton(){
+    public void SubmitExplanationButton(){      //답변이나 제시어 설명 제출하기
         string str=liarUI.GetExplanation();
         if(!isAnswerTime){
             photonView.RPC("ReadExplanation", RpcTarget.AllViaServer,playerNumber, str);
             liarUI.ClearAnnouncment();
         }
-        else{
-            photonView.RPC("CheckAnswer", RpcTarget.MasterClient,str);
+        else if(isAnswerTime){
+            photonView.RPC("CheckAnswer", RpcTarget.AllViaServer,str);
+
         }
         
     }
-    [PunRPC]
+    [PunRPC]    //현재 차례의 플레이어가 제출한 설명을 기록 및 마스터에서 확인
     void ReadExplanation(int PlayerNumber, string ex){
         liarUI.AddHistory(PlayerNumber, ex);
         if(PhotonNetwork.IsMasterClient) 
-        {
-            currentOrder++;
-            //cor=TurnTimer();
-            StopCoroutine(cor);
-            if(currentOrder>=PhotonNetwork.PlayerList.Length) 
-            {       
-                currentOrder=0;
-                //투표 타임
-                cor=VoteTimer();
-                StartCoroutine(cor);
-                return;
-            }
-            photonView.RPC("NextPlayerTurn",RpcTarget.AllViaServer,currentOrder);
-            
+        {  
+            isReadExplanation=true;
         }
     }
 
-    IEnumerator VoteTimer()
-    {   
-        //for master client
-        int i=10;
-        string str;
-        while(i>=0){
-            str="라이어로 생각되는 플레이어의 발판에 들어가 투표하세요.\n";
-            str+="남은시간 "+i+"초";
-            photonView.RPC("AnnouncementRPC",RpcTarget.AllBufferedViaServer,str);
-            yield return new WaitForSeconds(1f);
-            i--;
-        }
-        VoteCheck();
-    }
-
-    void VoteCheck(){
-        if(!PhotonNetwork.IsMasterClient) return;
-        int maxCount=-1, maxCountPlayer=-1, sameCountPlayer=-1;
+    int VoteCheck(){
+        if(!PhotonNetwork.IsMasterClient) return 0;
+        for(int i=0;i<maxPlayer;i++)voteCount[i]=0;
+        int maxCount=-1, maxCountPlayer=-1, sameCountPlayer=-1,count=0;
+        int currentVotes=PhotonNetwork.PlayerList.Length;
+        
         for(int i=0;i<maxPlayer;i++){
             if(votePlayer[i]<0) continue;
+            count++;
             voteCount[votePlayer[i]]++;
             if(maxCount<voteCount[votePlayer[i]]){
                 maxCount=voteCount[votePlayer[i]];
@@ -316,28 +505,54 @@ public class LiarGame : MonoBehaviourPun
                 sameCountPlayer=votePlayer[i];
             }
         }
+        int result;
         string str;
-        if(maxCountPlayer==liarPlayer){
+        isVoteEnd=true;
+        if(count<(currentVotes/2+currentVotes%2)){
+            //게임 한바퀴 더
+            currentOrder=0;
+            str="투표자 보다 미투표자가 더 많아 잠시후 한바퀴 더 돕니다.";
+            photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+            result=1;
+            
+        }
+        
+        else if(maxCountPlayer==liarPlayer){
+            //라이어 맞춤
+            isAnswerTime=true;
             str=string.Format("최다 득표자 {0}번은 라이어였습니다.\n 라이어가 정답을 맞추는 중입니다.",maxCountPlayer+1);
-            photonView.RPC("LiarAnswerTime",RpcTarget.AllBufferedViaServer);
+            photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+            photonView.RPC("LiarAnswerTime",RpcTarget.AllViaServer,true);
+            result=2;
 
         }
         else{
-            str=string.Format("최다 득표자 {0}번은 라이어가 아닙니다.\n라이어는 {1}번 입니다.",maxCountPlayer+1, liarPlayer+1);
-            cor=WaitTimer();
-            StartCoroutine(cor);
+            //라이어 틀림
+            str=string.Format("최다 득표자 {0}번은 라이어가 아닙니다.\n라이어는 {1}번 입니다. 라이어 승리",maxCountPlayer+1, liarPlayer+1);
+            photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+            result=3;
         }
-        photonView.RPC("AnnouncementRPC",RpcTarget.AllBufferedViaServer,str);
+        photonView.RPC("VoteEnded",RpcTarget.AllViaServer,result, true);
+        return result;
     }
     [PunRPC]
-    void LiarAnswerTime(){
-        isAnswerTime=true;
+    void VoteEnded(int VoteResult, bool voteEnd){
+        voteResult=VoteResult;
+        isVoteEnd=voteEnd;
+    }
+    [PunRPC]
+    void LiarAnswerTime(bool answerTime){
+        isAnswerTime=answerTime;
+        if(!isAnswerTime) return;
         if(!isLiar) return;
         string str="제시어를 추측해 정답을 맞추세요.";
         liarUI.PlayerTurn(str);
     }
     [PunRPC]
     void CheckAnswer(string Answer){
+        if(!isAnswerTime) return;
+        isAnswerTime=false;
+        isPlaying=false;
         if(!PhotonNetwork.IsMasterClient) return;
         string str;
         if(Answer==title){
@@ -347,29 +562,92 @@ public class LiarGame : MonoBehaviourPun
             str="라이어가 정답을 맞추지 못했습니다.\n라이어 정답: "+Answer;
         }
         photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
-        cor=WaitTimer();
-        StartCoroutine(cor);
-    }
-    IEnumerator WaitTimer()
-    {   
-        //for master client
-        int i=5;
-        
-        while(i>=0){
-            yield return new WaitForSeconds(1f);
-            i--;
-        }
-        photonView.RPC("RestartGame",RpcTarget.AllViaServer);
-        
     }
 
     [PunRPC]
     void RestartGame(){
         InitValue();
+        liarUI.GetExplanation();
+    }
+
+    [PunRPC]
+    void ClearHistoryBox(){
+        liarUI.ClearHistoryBox();
+        currentOrder=0;
+        voteResult=0;
+    }
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
         if(PhotonNetwork.IsMasterClient){
-            RandomPlayerNumber();
-            cor=GameReadyCheck();
-            StartCoroutine(cor);
+            if(isPlaying){
+                if((bool)otherPlayer.CustomProperties["isLiar"]){
+                    StopCoroutine(cor); //stop game state
+
+                    cor=LiarOut();
+                    StartCoroutine(cor);
+                }
+                else{
+                    int num=(int)otherPlayer.CustomProperties["playerNumber"];
+                    voteZones[num-1].SetActive(false);
+                }
+            }
+        }
+    }
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        if(!PhotonNetwork.IsMasterClient) return;
+        if(!isVoteZoneCreate){
+            CreateVoteZone();
+        }
+        gameState=(GameState)PhotonNetwork.CurrentRoom.CustomProperties["gameState"];
+        //voteZones
+        foreach(VoteZone script in FindObjectsOfType<VoteZone>(true)){
+            int idx=script.playerNumberToVote;
+            voteZones[idx]=script.gameObject;
+        }
+        cor=GameStateCheck();
+        StartCoroutine(cor);
+    }
+    IEnumerator LiarOut(){
+        string str="라이어가 게임에서 나가 재시작 합니다.";
+        photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
+         photonView.RPC("RestartGame",RpcTarget.AllViaServer);
+        int i=4;
+        while(i>0) {
+            i--;
+            yield return new WaitForSeconds(1f);
+        }
+        
+       
+       
+        gameState=GameState.SetLiar;
+        state["gameState"]=gameState;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(state);
+        cor=GameStateCheck();
+        StartCoroutine(cor);
+    }
+    public override void OnLeftRoom()
+    {
+        if(PhotonNetwork.IsMasterClient){
+           photonView.RPC("TimerSynchronization", RpcTarget.AllViaServer, timer);
+        }
+    }
+    [PunRPC]
+    void TimerSynchronization(int Timer){
+        timer=Timer;
+    }
+
+    //IPunObservable
+    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(timer);
+        }
+
+        else
+        {
+            timer = (int)stream.ReceiveNext();
         }
     }
 }

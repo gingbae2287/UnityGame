@@ -62,4 +62,10 @@ public class HistoryBox : MonoBehaviour {
             }
         }
     }
+    public void ClearHistoryBox(){
+        for(int i=0;i<explanation.Length;i++){
+            explanation[i]="";
+            explanationText[i].SetActive(false);
+        }
+    }
 }

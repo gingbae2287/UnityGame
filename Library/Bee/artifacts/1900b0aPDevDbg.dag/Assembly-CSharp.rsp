@@ -362,6 +362,7 @@
 "Assets/Scripts/Lobby/PlayerInfoInLobby.cs"
 "Assets/Scripts/UI/Ranking.cs"
 "Assets/Scripts/UI/UIInGame.cs"
+"Assets/Simple Helvetica/SimpleHelvetica.cs"
 "Assets/unity-chan!/Unity-chan! Model/Scripts/AutoBlink.cs"
 "Assets/unity-chan!/Unity-chan! Model/Scripts/CameraController.cs"
 "Assets/unity-chan!/Unity-chan! Model/Scripts/FaceUpdate.cs"
