@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ColorWar : MonoBehaviourPun, IPunObservable {
+public class ColorWar : MonoBehaviourPun{
     private static ColorWar instance;
     public static ColorWar Instance{
         get{
@@ -182,7 +182,7 @@ public class ColorWar : MonoBehaviourPun, IPunObservable {
         ui.UpdateScore(teamScore);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+   /* public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(!isGameStart) return;
         if (stream.IsWriting)
@@ -194,5 +194,5 @@ public class ColorWar : MonoBehaviourPun, IPunObservable {
         {
             for(int i=0;i<teamSize;i++) teamScore[i] = (int)stream.ReceiveNext();
         }
-    }
+    }*/
 }

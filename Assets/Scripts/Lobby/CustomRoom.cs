@@ -114,7 +114,7 @@ public class CustomRoom : MonoBehaviourPunCallbacks
         int playerCount=PhotonNetwork.PlayerList.Length;
         playerInfoCards[playerCount-1].SetActive(true);
         playerList[playerCount-1].SetPlayerInfo(newPlayer.NickName, newPlayer.ActorNumber);
-        //if(PhotonNetwork.IsMasterClient) photonView.RPC("SetGameName", RpcTarget.AllViaServer, currentGame);
+        if(PhotonNetwork.IsMasterClient) photonView.RPC("SetGameName", RpcTarget.AllViaServer, currentGame);
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
@@ -145,13 +145,13 @@ public class CustomRoom : MonoBehaviourPunCallbacks
         if(!PhotonNetwork.IsMasterClient) return;
         currentGame++;
         if(currentGame==gameList.Length) currentGame=0;
-        photonView.RPC("SetGameName", RpcTarget.AllBufferedViaServer, currentGame);
+        photonView.RPC("SetGameName", RpcTarget.AllViaServer, currentGame);
     }
     public void ButtonPrevGame(){
         if(!PhotonNetwork.IsMasterClient) return;
         currentGame--;
         if(currentGame<0) currentGame=gameList.Length-1;
-        photonView.RPC("SetGameName", RpcTarget.AllBufferedViaServer, currentGame);
+        photonView.RPC("SetGameName", RpcTarget.AllViaServer, currentGame);
         
     }
     [PunRPC]

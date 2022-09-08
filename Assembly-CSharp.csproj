@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\Auth\UserNameUI.cs" />
      <Compile Include="Assets\Scripts\ColorWar\ColorBlock.cs" />
      <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
+     <Compile Include="Assets\Scripts\ColorWar\ColorWarUI.cs" />
      <Compile Include="Assets\Scripts\Lobby\CustomRoom.cs" />
      <Compile Include="Assets\Scripts\Auth\SignUp.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
@@ -76,7 +77,6 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\Simple Helvetica\SimpleHelvetica.cs" />
      <Compile Include="Assets\Scripts\ColorWar\ColorWar.cs" />
-     <Compile Include="Assets\Scripts\ColorWar\ColorWarUI.cs" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
      <None Include="Assets\Simple Helvetica\readme.txt" />
