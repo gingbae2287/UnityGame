@@ -53,6 +53,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
     int[] votePlayer;   //idx: playernumber, value: voted playernumber
     int[] voteCount;    //how many count voted for other players
     GameObject[] voteZones;
+    int turnTime=30, voteTime=15, wattingTime=5;
     
     //===player setting
 
@@ -195,11 +196,15 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
             Debug.Log("GameStete: setliar");
                 if(!DBLoad){
                     gameState=GameState.DBLoading;
+                    state["gameState"]=gameState;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(state);
                     break;
                 }
                 if(isPlaying){
-                    timer=10;
+                    timer=turnTime;
                     gameState=GameState.Gaming;
+                    state["gameState"]=gameState;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(state);
                     break;
                 }
                 RandomPlayerNumber();      //set players order and Liar
@@ -239,10 +244,11 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 str="Game Start!";
                 photonView.RPC("AnnouncementRPC",RpcTarget.AllViaServer,str);
                 yield return new WaitForSeconds(1f);
+                timer=turnTime;
                 gameState=GameState.Gaming;
                 state["gameState"]=gameState;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(state);
-                timer=10;
+                
                 
             break;
             case GameState.Gaming:
@@ -258,13 +264,14 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                         yield return new WaitForSeconds(1f);
                         timer--;
                     }
-                    timer=10;
+                    timer=turnTime;
                     currentOrder++;
                 }
+                timer=voteTime;
                 gameState=GameState.VoteTime;
                 state["gameState"]=gameState;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(state);
-                timer=15;
+                
 
             break;
             case GameState.VoteTime:
@@ -281,7 +288,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 }
                 
                 if(voteResult==1){  // 미투표자가 과반수 이상. 한바퀴 더 돈다.
-                    timer=5;
+                    timer=wattingTime;
                     gameState=GameState.OneMoreTurn;
                     state["gameState"]=gameState;
                     PhotonNetwork.CurrentRoom.SetCustomProperties(state);
@@ -295,7 +302,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 }
                 else if( voteResult==3){
                     //라이어를 못찾았을때
-                    timer=5;
+                    timer=wattingTime;
                     gameState=GameState.Waiting;
                     state["gameState"]=gameState;
                     PhotonNetwork.CurrentRoom.SetCustomProperties(state);
@@ -308,10 +315,11 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                         yield return new WaitForSeconds(1f);
                         timer--;
                 }
+                timer=turnTime;
                 gameState=GameState.Gaming;
                 state["gameState"]=gameState;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(state);
-                timer=10;
+                
                 
             break;
             case GameState.AnswerTime:
@@ -321,7 +329,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                     timer--;
                     yield return new WaitForSeconds(1f);
                 }
-                timer=5;
+                timer=wattingTime;
                 gameState=GameState.Waiting;
                 state["gameState"]=gameState;
                 PhotonNetwork.CurrentRoom.SetCustomProperties(state);
@@ -631,10 +639,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
         if(PhotonNetwork.IsMasterClient){
            photonView.RPC("TimerSynchronization", RpcTarget.AllViaServer, timer);
         }
-    }
-    [PunRPC]
-    void TimerSynchronization(int Timer){
-        timer=Timer;
     }
 
     //IPunObservable

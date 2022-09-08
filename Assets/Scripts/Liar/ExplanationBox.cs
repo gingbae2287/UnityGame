@@ -7,6 +7,12 @@ public class ExplanationBox : MonoBehaviour{
     [SerializeField] Text guideText;
     [SerializeField] InputField explanation;
 
+    private void OnEnable() {
+        Player.LocalPlayerInstance.StopMove();
+    }
+    private void OnDisable() {
+        Player.LocalPlayerInstance.canMove=true;
+    }
     private void Start() {
         NullCheck();
     }

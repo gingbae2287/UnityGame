@@ -58,6 +58,12 @@ MonoBehaviour:
   - TimerSynchronization
   - VoteEnded
   - VoteZoneCreateRPC
+  - ChangeColor
+  - OutColor
+  - SetGameName
+  - ColorWarReady
+  - ColorWarStart
+  - ColorWarScore
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

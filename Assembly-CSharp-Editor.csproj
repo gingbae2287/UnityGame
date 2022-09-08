@@ -37,7 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Simple Helvetica\Editor\SimpleHelveticaCustomEditor.cs" />
-     <Compile Include="Assets\unity-chan!\Unity-chan! Model\Editor\CreateLocatorHere.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\Editor\ChatEditor.cs" />
      <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.172_manifest.txt" />
      <None Include="Assets\Firebase\Editor\FirebaseAuth_version-9.3.0_manifest.txt" />

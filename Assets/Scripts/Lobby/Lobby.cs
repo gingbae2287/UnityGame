@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Lobby : MonoBehaviour {
+public class Lobby : MonoBehaviourPunCallbacks {
 
     [SerializeField] GameObject CustomRoomObject; 
     [SerializeField] GameObject mainLobbyObject;
     [SerializeField] GameObject joinCustomRoomObject;
     [SerializeField] InputField inputFieldRoomID;
     [SerializeField] GameObject errorMessageObject;
+    [SerializeField] Button createCutstomRoomButton;
+    [SerializeField] Button joinCutstomRoomButton;
+    [SerializeField] Button randomMatchingButton;
+    [SerializeField] Text statusText;
 
 
     IEnumerator cor;
@@ -18,7 +24,19 @@ public class Lobby : MonoBehaviour {
         if(mainLobbyObject==null) Debug.LogError("mainLobbyObj is null");
         if(inputFieldRoomID==null) Debug.LogError("inputFieldRoomID is null");
         if(errorMessageObject==null) Debug.LogError("errorMessageObject is null");
+        if(createCutstomRoomButton==null) Debug.LogError("createCutstomRoomButton is null");
+        if(joinCutstomRoomButton==null) Debug.LogError("joinCutstomRoomButton is null");
+        if(randomMatchingButton==null) Debug.LogError("randomMatchingButton is null");
+        if(statusText==null) Debug.LogError("statusText is null");
+        statusText.text="Connecting to Server...";
+        ButtonActive(false);
         
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        ButtonActive(true);
+        statusText.text="Connected to Server";
     }
     public void RandomMatchingButton(){
         NetworkManager.Instance.Connect();
@@ -86,6 +104,12 @@ public class Lobby : MonoBehaviour {
     public void BackButton(){
         NetworkManager.Instance.BackToLobby();
         joinCustomRoomObject.SetActive(false);
+    }
+
+    void ButtonActive(bool act){
+        createCutstomRoomButton.interactable=act;
+        joinCutstomRoomButton.interactable=act;
+        randomMatchingButton.interactable=act;
     }
 
 

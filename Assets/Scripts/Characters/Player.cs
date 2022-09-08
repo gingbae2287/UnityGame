@@ -17,6 +17,7 @@ public class Player : MonoBehaviourPun
     float vert;     //vertical axes
     bool runState;
     bool jump;
+    public bool canMove{get; set;}
     
 
     public int playerNumber{get; private set;}
@@ -60,6 +61,8 @@ public class Player : MonoBehaviourPun
             playerCamera.StartMove();
             runState=false;
             jump=false;
+            canMove=true;
+            //Camera.main.transform.SetParent(transform);
         }
 
         gameEnd=false;
@@ -87,6 +90,11 @@ public class Player : MonoBehaviourPun
        
     }
     void Run(){
+        if(!canMove){
+            runState=false;
+            anim.SetInteger("RunState", 0);
+            return;
+        }
         if(hori==0 && vert==0) {
             if(runState) {
                 //변수값을 같은 값으로 변경하는 명령도 성능에 영향가는가?
@@ -100,12 +108,23 @@ public class Player : MonoBehaviourPun
             anim.SetInteger("RunState", 2);
         }
         anim.SetInteger("RunState", 2);
+        /*
         movement.Set(hori, 0, vert);
         movement=movement.normalized*speed;
         rigid.MovePosition(transform.position+movement);
+        */
+        Vector3 dirForward=transform.position-Camera.main.transform.position;
+        dirForward.y=0;
+        dirForward=dirForward.normalized;
+        Vector3 dirRight=Quaternion.AngleAxis(90, Vector3.up) * dirForward;
+        movement=(dirForward*vert + dirRight*hori);
+        movement*=speed;
+        rigid.MovePosition(transform.position+movement);
+
     }
 
     void Turn(){
+        if(!canMove) return;
         if(hori==0&& vert==0) return;
         if(jump) return;
         Quaternion newRotation=Quaternion.LookRotation(movement);
@@ -113,6 +132,7 @@ public class Player : MonoBehaviourPun
     }
 
     void Jump(){
+        if(!canMove) return;
         if(Input.GetButtonDown("Jump")){
             if(jump) return;
             jump=true;
@@ -147,6 +167,10 @@ public class Player : MonoBehaviourPun
         this.fallingPoint=FallingPoint;
         startPoint=pos;
 
+    }
+    public void StopMove(){
+        canMove=false;
+        anim.SetInteger("RunState", 0);
     }
 
     void AnimationUpdate(){
