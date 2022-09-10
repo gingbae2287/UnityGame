@@ -9,12 +9,13 @@ public class Coin : MonoBehaviourPun
     bool isActive;
     int mapIndex;
     float rotateSpeed=50f;
+    public int score=1;
     private void Start() {
         transform.rotation=Quaternion.Euler(90,0,0);
     }
     void Update(){
         //회전
-        if(photonView.IsMine) transform.Rotate(new Vector3(0,0,rotateSpeed*Time.deltaTime));
+        transform.Rotate(new Vector3(0,0,rotateSpeed*Time.deltaTime));
     }
     private void OnEnable() {
         if(!PhotonNetwork.IsMasterClient) return;
@@ -32,13 +33,14 @@ public class Coin : MonoBehaviourPun
         if(!(other.gameObject.tag=="Player")) return;
         if(!other.gameObject.GetComponent<Player>().photonView.IsMine) return;
         isActive=false;
+        CoinCoin.Instance.GetScore(score);
         photonView.RPC("GetCoin",RpcTarget.MasterClient,mapIndex);
-        Debug.Log("get COin");
     }
     [PunRPC]
     void GetCoin(int mapIdx){
         if(!PhotonNetwork.IsMasterClient) return;
         CoinManager.Instance.GetCoin(mapIdx);
+        transform.position=new Vector3(5,50,5);
         gameObject.SetActive(false);
     }
     [PunRPC]

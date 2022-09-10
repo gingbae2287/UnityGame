@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 
-public class GameManager : MonoBehaviourPunCallbacks {
+public class GameManager : MonoBehaviourPun {
     private static GameManager instance;
     public static GameManager Instance{
         get{
@@ -33,11 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
         else Destroy(this.gameObject);
 
     }
-    public override void OnLeftRoom()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
-
     public void LeftRoom(){
         //PhotonNetwork.LeaveRoom();
         //PhotonNetwork.Disconnect();

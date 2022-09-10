@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
 
     float mouseX,mouseY;
 
-    Vector3 camPos, playerPos,rotateCam;    //Camera Position
+    Vector3 camPos, playerPos,rotateCam,pos;    //Camera Position
     bool isFollowing, cameraReady;
 
     void Awake(){
@@ -49,7 +49,7 @@ public class PlayerCamera : MonoBehaviour
             //Camera.main.transform.Translate(dir*Time.deltaTime*moveSpeed);
             //Camera.main.transform.position=Vector3.MoveTowards(camPos,playerPos, moveSpeed*Time.deltaTime);
             
-            mainCam.transform.position=Vector3.Lerp(camPos,playerPos,0.0025f);
+            mainCam.transform.position=Vector3.Lerp(camPos,playerPos,0.01f);
         }
         else{
             cameraReady=true;
@@ -104,7 +104,7 @@ public class PlayerCamera : MonoBehaviour
             offset=offset.normalized*8f;
             
         }
-        Vector3 pos=transform.position-offset;
+        pos=transform.position-offset;
         if(mouseY*mouseY<0.01)pos.y=mainCam.transform.position.y;
         mainCam.transform.position=pos;
 

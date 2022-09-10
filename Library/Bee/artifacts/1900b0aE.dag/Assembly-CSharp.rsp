@@ -385,6 +385,7 @@
 "Assets/Scripts/Characters/Player.cs"
 "Assets/Scripts/CoinCoin/Coin.cs"
 "Assets/Scripts/CoinCoin/CoinCoin.cs"
+"Assets/Scripts/CoinCoin/CoinCoinUI.cs"
 "Assets/Scripts/CoinCoin/CoinManager.cs"
 "Assets/Scripts/ColorWar/ColorBlock.cs"
 "Assets/Scripts/ColorWar/ColorWar.cs"

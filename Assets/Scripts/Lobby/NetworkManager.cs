@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using Photon.Pun;
 using Photon.Realtime;
+
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
@@ -19,7 +22,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     public string gameVersion="1.0";
-    [SerializeField] byte maxPlayers=10;
+    byte maxPlayers=10;
 
     //Current State
     public bool isConnectedToMasterServer{get; private set;}
@@ -81,17 +84,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         isConnectedToLobby=false;
         isConnectedToRoom=false;
     }
-
-    //=====Lobby button=====
-    /*
-    public void JoinCustomLobby(bool isCreate){
-        if(isConnecting) return;
-        if(PhotonNetwork.InLobby) return;
-        Debug.Log("Try to connect Lobby for CustomGame");
-        isConnecting=true;
-        isCreateRoom=isCreate;
-        PhotonNetwork.JoinLobby(CustomLobby);
-    }*/
     public void Connect(){
     
         Debug.Log("Try to Connect");
@@ -138,24 +130,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
 //=======CallBack==========
-    /*public override void OnJoinedLobby()
-    {
-        isConnecting=false;
-        isConnectedToLobby=true;
-        Debug.Log("Join Lobby Success. Lobby name: "+PhotonNetwork.CurrentLobby.Name);
-        if(isCreateRoom) 
-        {
-           CreateCustomRoom();
-        }
-
-    }
-    public override void OnLeftLobby()
-    {
-        isConnectedToLobby=false;
-        Debug.Log("Leave Lobby");
-
-    }
-    */
+    
     public override void OnConnectedToMaster()
     {
         StateInit();
@@ -183,8 +158,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         isConnectedToRoom=true;
         //if(PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("GlassBridge");
         //PhotonNetwork.LoadLevel("GlassBridge");
-        roomCP=PhotonNetwork.CurrentRoom.CustomProperties;
-        Debug.Log("Join Room. Room Id: "+roomCP[roomID]);
+       // roomCP=PhotonNetwork.CurrentRoom.CustomProperties;
+        //Debug.Log("Join Room. Room Id: "+roomCP[roomID]);
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
@@ -194,11 +169,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         //마스터 서버로 다시 연결
         isConnectedToRoom=false;
+        SceneManager.LoadScene("Lobby");
         //PhotonNetwork.LeaveRoom();
         Debug.Log("Left Room");
     }
 
-//========Get function====
 
     public int GetRoomID(){
         if(!PhotonNetwork.InRoom) return 0;

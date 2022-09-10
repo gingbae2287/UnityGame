@@ -41,7 +41,6 @@ public class CustomRoom : MonoBehaviourPunCallbacks
 
     }
     new void OnEnable(){
-        Debug.Log("Player enter. actornum: "+PhotonNetwork.LocalPlayer.ActorNumber+"  is Master?: "+PhotonNetwork.LocalPlayer.IsMasterClient);
         PhotonNetwork.AddCallbackTarget(this);
         RenewalRoom();
     }
@@ -102,7 +101,6 @@ public class CustomRoom : MonoBehaviourPunCallbacks
 
         for(int i=0;i<PhotonNetwork.PlayerList.Length;i++){
             playerInfoCards[i].SetActive(true);
-            Debug.Log("Player num: "+PhotonNetwork.PlayerList[i].ActorNumber+"  is Master?: "+PhotonNetwork.PlayerList[i].IsMasterClient);
             playerList[i].SetPlayerInfo(PhotonNetwork.PlayerList[i].NickName, PhotonNetwork.PlayerList[i].ActorNumber);
         }
 
@@ -110,7 +108,6 @@ public class CustomRoom : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {  
-        Debug.Log("Player enter. actornum: "+newPlayer.ActorNumber+"  is Master?: "+newPlayer.IsMasterClient);
         int playerCount=PhotonNetwork.PlayerList.Length;
         playerInfoCards[playerCount-1].SetActive(true);
         playerList[playerCount-1].SetPlayerInfo(newPlayer.NickName, newPlayer.ActorNumber);
@@ -119,25 +116,15 @@ public class CustomRoom : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        Debug.Log("Player left. actornum: "+PhotonNetwork.LocalPlayer.ActorNumber);
         RenewalRoom();
     }
     public override void OnLeftRoom()
     {
     
-        Debug.Log("Left Room (CustomRoom)");
     }
 //====Button=========
     public void BackButton(){
         NetworkManager.Instance.BackToLobby();
-        cor=CheckLeaveLobby();
-        StartCoroutine(cor);
-    }
-
-    IEnumerator CheckLeaveLobby(){
-        while(NetworkManager.Instance.isConnectedToLobby){
-            yield return new WaitForSeconds(0.1f);
-        }
         mainLobbyObject.SetActive(true);
         gameObject.SetActive(false);
     }

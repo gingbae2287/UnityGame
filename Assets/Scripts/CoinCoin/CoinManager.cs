@@ -14,7 +14,8 @@ public class CoinManager : MonoBehaviourPun
     }
     //===for master===
     public bool coinCreated{get; private set;}
-    int maxCoins=50, blockSize=3;
+    int maxCoins=35, blockSize=3;
+    Vector3 coinPos=new Vector3(5,50,5);
     //bool[,] coinMap=new bool[10,10];
     List<int> coinMap=new List<int>(100);
     string coinPath="CoinCoin/Coin";
@@ -45,9 +46,9 @@ public class CoinManager : MonoBehaviourPun
     void CreateCoins(){
         if(!PhotonNetwork.IsMasterClient) return;
         if(coinCreated) return;
-        Vector3 pos=Vector3.zero;
+        
         for(int i=0;i<maxCoins;i++){
-            coinObjs[i]=PhotonNetwork.InstantiateRoomObject(coinPath,pos,Quaternion.identity);
+            coinObjs[i]=PhotonNetwork.InstantiateRoomObject(coinPath,coinPos,Quaternion.identity);
             coins[i]=coinObjs[i].GetComponent<Coin>();
             coinObjs[i].SetActive(false);
         }
@@ -60,7 +61,8 @@ public class CoinManager : MonoBehaviourPun
         while(!CoinCoin.Instance.isGameStart){
             yield return new WaitForSeconds(0.1f);
         }
-
+        int idx=0;
+        float y=0f;
         while(true){
             for(int i=0;i<maxCoins;i++){
                 /*if(!coinObjs[i].activeSelf){
@@ -73,13 +75,14 @@ public class CoinManager : MonoBehaviourPun
                     yield return new WaitForSeconds(0.3f);
                 }*/
                 if(!coins[i].gameObject.activeSelf){
-                    int x=Random.Range(0,coinMap.Count);
-                    Vector3 pos=new Vector3(coinMap[x]%10*blockSize,0.3f,coinMap[x]/10*blockSize);
+                    idx=Random.Range(0,coinMap.Count);
+                    y=Random.Range(0.5f,2f);
+                    Vector3 pos=new Vector3(coinMap[idx]%10*blockSize,y,coinMap[idx]/10*blockSize);
                     coins[i].gameObject.SetActive(true);
                     coins[i].gameObject.transform.position=pos;
-                    coins[i].ActiveCoin(coinMap[x]);
-                    coinMap.RemoveAt(x);
-                    yield return new WaitForSeconds(0.5f);
+                    coins[i].ActiveCoin(coinMap[idx]);
+                    coinMap.RemoveAt(idx);
+                    yield return new WaitForSeconds(0.7f);
                 }
             }
             yield return new WaitForSeconds(0.2f);

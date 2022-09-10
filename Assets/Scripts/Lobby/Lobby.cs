@@ -33,73 +33,55 @@ public class Lobby : MonoBehaviourPunCallbacks {
         
     }
 
-    public override void OnConnectedToMaster()
-    {
-        ButtonActive(true);
-        statusText.text="Connected to Server";
-    }
+    
     public void RandomMatchingButton(){
         NetworkManager.Instance.Connect();
     }
 
     public void CreateCustomRoomButton(){
         NetworkManager.Instance.CreateCustomRoom();
-        //NetworkManager.Instance.CreateCustomRoom();
-        cor=CheckCreateRoom();
-        StartCoroutine(cor);
     }
     public void JoinCustomRoomButton(){
         if(!NetworkManager.Instance.isConnectedToMasterServer) return;
         joinCustomRoomObject.SetActive(true);
     }
-
-    IEnumerator CheckCreateRoom(){
-        int corCount=0;
-        while(!NetworkManager.Instance.isConnectedToRoom){
-            yield return new WaitForSeconds(0.1f);
-            corCount++;
-            if(corCount>20) break;
-            
-        }
-        //create custom Room
-        if(NetworkManager.Instance.isConnectedToRoom){
-            CustomRoomObject.SetActive(true);
-            mainLobbyObject.SetActive(false);
-
-           //CustomRoomObject.GetComponent<CustomRoom>().RenewalRoom(); 
-
-        }
+    //---override puncallback
+    public override void OnConnectedToMaster()
+    {
+        ButtonActive(true);
+        statusText.text="Connected to Server";
     }
+
+    public override void OnCreatedRoom()
+    {
+        CustomRoomObject.SetActive(true);
+        mainLobbyObject.SetActive(false);
+    }
+    public override void OnJoinedRoom(){
+        CustomRoomObject.SetActive(true);
+        mainLobbyObject.SetActive(false);
+        joinCustomRoomObject.SetActive(false);
+    }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        //
+    }
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        errorMessageObject.SetActive(true);
+        NetworkManager.Instance.infoMessage="방이 존재하지 않습니다. ";
+    }
+
 
     public void CheckCustomRoomID(){
         if(NetworkManager.Instance.isConnectedToRoom) return;
-        int roomID=int.Parse(inputFieldRoomID.text);
-        NetworkManager.Instance.JoinCustomRoom(roomID);
-        cor=CheckJoinRoom();
-        StartCoroutine(cor);
-        
-
+        //int roomID=int.Parse(inputFieldRoomID.text);
+        string roomID=inputFieldRoomID.text;
+        //NetworkManager.Instance.JoinCustomRoom(roomID);
+        PhotonNetwork.JoinRoom(roomID.ToString());
     }
-    IEnumerator CheckJoinRoom(){
-        int corCount=0;
-        while(!NetworkManager.Instance.isConnectedToRoom){
-            corCount++;
-            if(corCount>10) break;
-            yield return new WaitForSeconds(0.1f);
-        }
-        //create custom Room
-        if(NetworkManager.Instance.isConnectedToRoom){
-            CustomRoomObject.SetActive(true);
-            mainLobbyObject.SetActive(false);
-            joinCustomRoomObject.SetActive(false);
+    
 
-            //CustomRoomObject.GetComponent<CustomRoom>().RenewalRoom(); 
-        }
-        else {
-            errorMessageObject.SetActive(true);
-            NetworkManager.Instance.infoMessage="방이 존재하지 않습니다. ";
-        }
-    }
 
     public void BackButton(){
         NetworkManager.Instance.BackToLobby();
