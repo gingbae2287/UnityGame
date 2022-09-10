@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ColorWar.unity
     guid: 4e5f93ffccc65054f83f22760bfc6e48
+  - enabled: 1
+    path: Assets/Scenes/CoinCoin.unity
+    guid: 61f22f1ff8e608c4394f43164b816230
   m_configObjects: {}

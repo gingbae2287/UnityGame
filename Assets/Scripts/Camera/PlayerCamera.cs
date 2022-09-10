@@ -5,12 +5,8 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     //GameObject player;
-    float offsetX;
-    float offsetY;
-    float offsetZ;
-    //float offset=6f;
     Vector3 offset;
-    [SerializeField] float followSpeed=5f;
+    Camera mainCam;
     private float camera_distanse=1f;
     float rotateSpeed=350f, moveSpeed=5f;
 
@@ -22,9 +18,11 @@ public class PlayerCamera : MonoBehaviour
     void Awake(){
         isFollowing=false;
         cameraReady=false;
-    }
-    void start(){
         
+    }
+    void Start(){
+        mainCam=Camera.main;
+        if(mainCam==null) Debug.LogError("maincam is null");
     }
     void Update(){
         
@@ -51,7 +49,7 @@ public class PlayerCamera : MonoBehaviour
             //Camera.main.transform.Translate(dir*Time.deltaTime*moveSpeed);
             //Camera.main.transform.position=Vector3.MoveTowards(camPos,playerPos, moveSpeed*Time.deltaTime);
             
-            Camera.main.transform.position=Vector3.Lerp(camPos,playerPos,0.0025f);
+            mainCam.transform.position=Vector3.Lerp(camPos,playerPos,0.0025f);
         }
         else{
             cameraReady=true;
@@ -69,7 +67,7 @@ public class PlayerCamera : MonoBehaviour
         Pos.z=transform.position.z+(offsetZ*camera_distanse);*/
     }
     float GetRange(){
-        return (transform.position-Camera.main.transform.position).sqrMagnitude;
+        return (transform.position-mainCam.transform.position).sqrMagnitude;
     }
     void RotateCamera(){
         if(!isFollowing) return;
@@ -83,34 +81,34 @@ public class PlayerCamera : MonoBehaviour
 
         }
         else{
-            Camera.main.transform.RotateAround(transform.position, Vector3.up, mouseX);
+            mainCam.transform.RotateAround(transform.position, Vector3.up, mouseX);
             if(camPos.y<transform.position.y+1f) {
                 //camPos.y=transform.position.y+0.5f;
                 //Camera.main.transform.position=camPos;
-                if(mouseY<0) Camera.main.transform.RotateAround(transform.position, Camera.main.transform.right, -mouseY);
+                if(mouseY<0) mainCam.transform.RotateAround(transform.position, mainCam.transform.right, -mouseY);
             }
             else if(camPos.y>transform.position.y+6f) 
             {
                 
                 //camPos.y=transform.position.y+3f;
                 //Camera.main.transform.position=camPos;
-                if(mouseY>0) Camera.main.transform.RotateAround(transform.position, Camera.main.transform.right, -mouseY);
+                if(mouseY>0) mainCam.transform.RotateAround(transform.position, mainCam.transform.right, -mouseY);
             }
             else{
-                Camera.main.transform.RotateAround(transform.position, Camera.main.transform.right, -mouseY);
+                mainCam.transform.RotateAround(transform.position, mainCam.transform.right, -mouseY);
             }
                 
-            camPos=Camera.main.transform.position;
+            camPos=mainCam.transform.position;
             playerPos=transform.position;
             offset=playerPos-camPos;
             offset=offset.normalized*8f;
             
         }
         Vector3 pos=transform.position-offset;
-        if(mouseY*mouseY<0.01)pos.y=Camera.main.transform.position.y;
-        Camera.main.transform.position=pos;
+        if(mouseY*mouseY<0.01)pos.y=mainCam.transform.position.y;
+        mainCam.transform.position=pos;
 
-        Camera.main.transform.LookAt(transform.position);
+        mainCam.transform.LookAt(transform.position);
 
         
 

@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ColorWar : MonoBehaviourPun{
+public class ColorWar : MonoBehaviourPun, IPunObservable{
     private static ColorWar instance;
     public static ColorWar Instance{
         get{
@@ -13,22 +13,32 @@ public class ColorWar : MonoBehaviourPun{
             else return instance;
         }
     }
+    enum TeamName{
+        Yellow,
+        Blue,
+        Green,
+        Red
+    }
+    TeamName teamName;
     [SerializeField] GameObject bolckPrefab;
     [SerializeField] ColorWarUI ui;
     //GameObject[] blocks;
     int blockSize=2;
     string blockPath="ColorWar/Block";
     //===for Master====
-    int currentPlayer;
+    int currentPlayer, timer, gameTime=30;
+    string notif;
     public int teamSize{get; private set;}
     IEnumerator cor;
     public bool isGameStart{get; private set;}
     bool isBlockCreated, isGameReady;
     int[] teamScore=new int[4];
+    List<int>[] teamPlayer=new List<int>[4];    //팀별 플레이어 번호 리스트
 
     //==for players====
     public int teamNumber{get; private set;}
     public int playerNumber{get; private set;}
+    Vector3[] teamSpawnPoint=new Vector3[4];
     void Awake(){
         if(instance==null){
             instance=this;
@@ -43,7 +53,10 @@ public class ColorWar : MonoBehaviourPun{
         if(!PhotonNetwork.IsMasterClient) return;
         cor=GameStart();
         StartCoroutine(cor);
-       
+        teamSpawnPoint[0]=new Vector3(0,1,0);
+        teamSpawnPoint[1]=new Vector3(0,1,9*blockSize);
+        teamSpawnPoint[2]=new Vector3(9*blockSize,1,0);
+        teamSpawnPoint[3]=new Vector3(9*blockSize,1,9*blockSize);
     }
 
     void CreateBlocks(){
@@ -97,9 +110,26 @@ public class ColorWar : MonoBehaviourPun{
         while(!CheckAllPlayerReady()){
             yield return new WaitForSeconds(0.1f);
         }
+        timer=3;
+        while(timer>0){
+            notif=timer+"초 후 게임을 시작합니다.";
+            photonView.RPC("ColorWarNotification", RpcTarget.AllViaServer, notif);
+            timer--;
+            yield return new WaitForSeconds(1f);
+        }
+        
         photonView.RPC("ColorWarStart",RpcTarget.AllViaServer);
-
-
+        timer=gameTime;
+        while(timer>0){
+            notif=timer.ToString();
+            photonView.RPC("ColorWarNotification", RpcTarget.AllViaServer, notif);
+            timer--;
+            yield return new WaitForSeconds(1f);
+        }
+        photonView.RPC("ColorWarGameEnd", RpcTarget.AllViaServer);
+        int WinnerTeam=CheckWinnerTeam();
+        notif="게임종료\n"+(TeamName)(WinnerTeam)+"팀 승리!";
+        photonView.RPC("ColorWarNotification", RpcTarget.AllViaServer, notif);
     }
     [PunRPC]
     void ColorWarReady(int TeamSize){
@@ -108,15 +138,26 @@ public class ColorWar : MonoBehaviourPun{
     }
     [PunRPC]
     void ColorWarStart(){
+        notif="게임 시작!";
+        photonView.RPC("ColorWarNotification", RpcTarget.AllViaServer, notif);
         Player.LocalPlayerInstance.canMove=true;
         isGameStart=true;
+    }
+    [PunRPC]
+    void ColorWarNotification(string str){
+        ui.SetNotification(str);
+    }
+    [PunRPC]
+    void ColorWarGameEnd(){
+        Player.LocalPlayerInstance.StopMove();
+        isGameStart=false;
     }
     void SpawnPlayer(){
         teamNumber=(int)PhotonNetwork.LocalPlayer.CustomProperties["Team"];
         if(Player.LocalPlayerInstance!=null) return;
        // startPoint=new Vector3(maxPlayer*0.5f-playerNumber, 0, 0);
-        PhotonNetwork.Instantiate("Character/TT_male",new Vector3(0,1,0),Quaternion.identity);
-        Player.LocalPlayerInstance.GameSettingForPlayer(new Vector3(0,1,0));
+        PhotonNetwork.Instantiate("Character/TT_male",teamSpawnPoint[teamNumber],Quaternion.identity);
+        Player.LocalPlayerInstance.GameSettingForPlayer(teamSpawnPoint[teamNumber]);
         Player.LocalPlayerInstance.StopMove();
         Hashtable hash=new Hashtable();
         hash.Add("isSpawn",true);
@@ -147,7 +188,9 @@ public class ColorWar : MonoBehaviourPun{
         }
         for(int i=0;i<currentPlayer;i++){
             Hashtable hash=new Hashtable();
-            hash.Add("Team",arr[i]%teamSize);
+            int team=arr[i]%teamSize;
+            hash.Add("Team",team);
+            //teamPlayer[team].Add(i);
             PhotonNetwork.PlayerList[i].SetCustomProperties(hash);
         }
         isGameReady=true;
@@ -181,18 +224,31 @@ public class ColorWar : MonoBehaviourPun{
         }
         ui.UpdateScore(teamScore);
     }
+    int CheckWinnerTeam(){
+        int WinnerTeam=-1, MaxScore=0;
+        for(int i=0;i<teamSize;i++){
+            if(teamScore[i]>MaxScore) {
+                MaxScore=teamScore[i];
+                WinnerTeam=i;
+            }
+            else if(teamScore[i]==MaxScore){
+                //동점자 처리
+            }
+        }
+        return WinnerTeam;
+    }
 
-   /* public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+   public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(!isGameStart) return;
-        if (stream.IsWriting)
+        if (stream.IsWriting && PhotonNetwork.IsMasterClient)
         {
-            for(int i=0;i<teamSize;i++) stream.SendNext(teamScore[i]);
+            stream.SendNext(timer);
         }
 
         else
         {
-            for(int i=0;i<teamSize;i++) teamScore[i] = (int)stream.ReceiveNext();
+           timer = (int)stream.ReceiveNext();
         }
-    }*/
+    }
 }

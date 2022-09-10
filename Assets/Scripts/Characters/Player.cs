@@ -36,6 +36,7 @@ public class Player : MonoBehaviourPun
     Rigidbody rigid; 
     Animator anim;
     PlayerCamera playerCamera;
+    Camera mainCam;
 
     
 
@@ -52,6 +53,7 @@ public class Player : MonoBehaviourPun
         rigid=GetComponent<Rigidbody>();
         anim=GetComponent<Animator>();
         playerCamera=GetComponent<PlayerCamera>();
+        
 
 
     }
@@ -61,13 +63,14 @@ public class Player : MonoBehaviourPun
             playerCamera.StartMove();
             runState=false;
             jump=false;
-            canMove=true;
+            //canMove=true;
             //Camera.main.transform.SetParent(transform);
         }
 
         gameEnd=false;
         playerNumber=PhotonNetwork.LocalPlayer.ActorNumber;
         playerName=PhotonNetwork.LocalPlayer.NickName;
+        mainCam=Camera.main;
        //else Destroy(this.gameObject);
     }
 
@@ -113,11 +116,11 @@ public class Player : MonoBehaviourPun
         movement=movement.normalized*speed;
         rigid.MovePosition(transform.position+movement);
         */
-        Vector3 dirForward=transform.position-Camera.main.transform.position;
+        Vector3 dirForward=transform.position-mainCam.transform.position;
         dirForward.y=0;
         dirForward=dirForward.normalized;
         Vector3 dirRight=Quaternion.AngleAxis(90, Vector3.up) * dirForward;
-        movement=(dirForward*vert + dirRight*hori);
+        movement=(dirForward*vert + dirRight*hori)/(Mathf.Abs(vert)+Mathf.Abs(hori));
         movement*=speed;
         rigid.MovePosition(transform.position+movement);
 

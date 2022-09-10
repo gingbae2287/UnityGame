@@ -2651,6 +2651,7 @@ MonoBehaviour:
   gameList:
   - ColorWar
   - Liar
+  - CoinCoin
   playerInfo: {fileID: 7642730305301158878, guid: cbaaf98c855a8904485b803228cc88a3, type: 3}
   mainLobbyObject: {fileID: 216835625}
   roomNumber: {fileID: 43458681}

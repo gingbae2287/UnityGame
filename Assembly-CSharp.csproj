@@ -77,6 +77,9 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\Simple Helvetica\SimpleHelvetica.cs" />
      <Compile Include="Assets\Scripts\ColorWar\ColorWar.cs" />
+     <Compile Include="Assets\Scripts\CoinCoin\CoinCoin.cs" />
+     <Compile Include="Assets\Scripts\CoinCoin\Coin.cs" />
+     <Compile Include="Assets\Scripts\CoinCoin\CoinManager.cs" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
      <None Include="Assets\Simple Helvetica\readme.txt" />

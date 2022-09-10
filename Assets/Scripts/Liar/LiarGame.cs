@@ -644,7 +644,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
     //IPunObservable
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        if (stream.IsWriting && PhotonNetwork.IsMasterClient)
         {
             stream.SendNext(timer);
         }
