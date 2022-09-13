@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "162786322753",
+    "firebase_url": "https://squidgame-f061c-default-rtdb.firebaseio.com",
+    "project_id": "squidgame-f061c",
+    "storage_bucket": "squidgame-f061c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162786322753:android:6c8714111d22b2569319c0",
+        "android_client_info": {
+          "package_name": "com.YB.SquidGame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162786322753-phqe08iigrpvlbdrm9a5e6ltuvdf3fsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.YB.SquidGame",
+            "certificate_hash": "ceaf33ea44bdb0905c31f8924d2e1ac6cf8f752c"
+          }
+        },
+        {
+          "client_id": "162786322753-l45qu28b2rmdpdmih9segbs2i9sguvvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbZZIAFkm1Bzksyj9-MnBK3Y7QiafZHu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162786322753-l45qu28b2rmdpdmih9segbs2i9sguvvu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

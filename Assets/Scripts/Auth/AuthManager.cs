@@ -10,7 +10,7 @@ using Firebase.Extensions;
 using Firebase.Database;
 
 public class AuthManager : MonoBehaviour{
-
+    [SerializeField] Text testText;
     //  singletone  -----////
     private static AuthManager instance;
     public static AuthManager Instance{
@@ -58,18 +58,25 @@ public class AuthManager : MonoBehaviour{
         else Destroy(this.gameObject);
         //------------------------
         BtSignIn.interactable=false;
+        testText.text="파이어베이스 연결중";
 
         // firebase unity 연동 메뉴얼 https://firebase.google.com/docs/unity/setup?hl=ko
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>{
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>{
             var dependencyStatus = task.Result;
             if(dependencyStatus ==DependencyStatus.Available){
+                
                 firebaseApp = FirebaseApp.DefaultInstance;
+                testText.text="1";
                 firebaseAuth=FirebaseAuth.DefaultInstance;
+                testText.text="2";
                 DBref=FirebaseDatabase.DefaultInstance.RootReference;
+                testText.text="3";
                 IsFirebaseReady=true;
+                
             }
             else{
                 IsFirebaseReady=false;
+                testText.text="Could not resolve all Firebase dependencies";
                 UnityEngine.Debug.LogError(System.String.Format(
                     "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
@@ -92,12 +99,14 @@ public class AuthManager : MonoBehaviour{
             Debug.Log($"status: {task.Status}");
             IsSignInOnProgress=false;
             if (task.IsCanceled) {
+                testText.text="SignInWithEmailAndPasswordAsync was canceled.";
                 Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
                 BtSignIn.interactable=true;
                 
                 return;
             }
             if (task.IsFaulted) {
+                testText.text="SignInWithEmailAndPasswordAsync encountered an error";
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
                 BtSignIn.interactable=true;
                 return;
