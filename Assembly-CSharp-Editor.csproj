@@ -39,7 +39,6 @@
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSUtil.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSProjectSettings.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSAndroidSetupUI.cs" />
-     <Compile Include="Assets\Simple Helvetica\Editor\SimpleHelveticaCustomEditor.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\NearbyConnectionUI.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSPostBuild.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSUpgrader.cs" />
@@ -318,12 +317,6 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
         <HintPath>C:\coding\unityVersion\2021.3.7f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Google.IOSResolver">
-        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.IOSResolver.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.PackageManagerResolver">
-        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.PackageManagerResolver.dll</HintPath>
-    </Reference>
     <Reference Include="Google.JarResolver">
         <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.JarResolver.dll</HintPath>
     </Reference>
@@ -336,17 +329,8 @@
     <Reference Include="Firebase.App">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Editor">
-        <HintPath>C:\coding\SquidGame\Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Analytics">
-        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Database">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
@@ -360,20 +344,32 @@
     <Reference Include="Firebase.TaskExtension">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
-    <Reference Include="Google.MiniJson">
-        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Tasks">
-        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
-    </Reference>
     <Reference Include="Google.VersionHandler">
         <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.PackageManagerResolver">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.PackageManagerResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+        <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Editor">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Analytics">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandlerImpl">
         <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.VersionHandlerImpl.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Tasks">
+        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Compat">
         <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
@@ -383,6 +379,9 @@
     </Reference>
     <Reference Include="unityplastic">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.collab-proxy@1.17.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver">
+        <HintPath>C:\coding\SquidGame\Assets\ExternalDependencyManager\Editor\1.2.172\Google.IOSResolver.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
         <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -810,8 +809,14 @@
     <Reference Include="Unity.Services.Core">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core.Environments">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>

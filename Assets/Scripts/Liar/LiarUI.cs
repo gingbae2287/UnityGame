@@ -7,6 +7,7 @@ public class LiarUI : MonoBehaviour{
     [SerializeField] Text announcement;
     [SerializeField] Text title;
     [SerializeField] Text category;
+    [SerializeField] Text myOrder;
     [SerializeField] HistoryBox historyBox;
     [SerializeField] ExplanationBox explanationBox;
 
@@ -26,6 +27,10 @@ public class LiarUI : MonoBehaviour{
         if(category==null) Debug.LogError("category is null");
         if(historyBox==null) Debug.LogError("historyBox is null");
         if(explanationBox==null) Debug.LogError("explanationBox is null");
+        if(myOrder==null) Debug.LogError("myOrder is null");
+    }
+    public void SetMyOrder(int order){
+        myOrder.text="내 번호: "+order;
     }
 
     public void SetAnnouncement(string str){

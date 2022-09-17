@@ -40,7 +40,6 @@
      <Compile Include="Assets\GooglePlayGames\BasicApi\PlayerProfile.cs" />
      <Compile Include="Assets\GooglePlayGames\OurUtils\PlatformUtils.cs" />
      <Compile Include="Assets\Scripts\Liar\HistoryBox.cs" />
-     <Compile Include="Assets\Scripts\Auth\PlayCenterManager.cs" />
      <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Events\Event.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
@@ -95,7 +94,6 @@
      <Compile Include="Assets\Scripts\CoinCoin\CoinManager.cs" />
      <Compile Include="Assets\Scripts\CoinCoin\Coin.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\LeaderboardScoreData.cs" />
-     <Compile Include="Assets\Scripts\Camera\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Liar\VoteZone.cs" />
      <Compile Include="Assets\GooglePlayGames\OurUtils\Logger.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
@@ -109,7 +107,6 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
      <Compile Include="Assets\Scripts\Auth\AuthManager.cs" />
      <Compile Include="Assets\GooglePlayGames\OurUtils\Misc.cs" />
-     <Compile Include="Assets\Scripts\Auth\SignIn.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\SavedGame\SavedGameMetadataUpdate.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidHelperFragment.cs" />
      <Compile Include="Assets\Scripts\Lobby\NetworkManager.cs" />
@@ -135,13 +132,16 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidTokenClient.cs" />
      <Compile Include="Assets\Scripts\Lobby\Lobby.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
-     <Compile Include="Assets\Simple Helvetica\SimpleHelvetica.cs" />
      <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesUserProfile.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\EndpointDetails.cs" />
      <Compile Include="Assets\Scripts\ColorWar\ColorWar.cs" />
+     <Compile Include="Assets\Scripts\ColorWar\ColorWarTest.cs" />
+     <Compile Include="Assets\Scripts\GameManager\LoadingScene.cs" />
+     <Compile Include="Assets\Scripts\GameManager\InGameUI.cs" />
+     <Compile Include="Assets\Scripts\GameManager\Setting.cs" />
+     <Compile Include="Assets\Scripts\GameManager\LobbySettingUI.cs" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
-     <None Include="Assets\Simple Helvetica\readme.txt" />
      <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-analytics-unity\maven-metadata.xml" />
@@ -393,12 +393,6 @@
     <Reference Include="Firebase.App">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Analytics">
-        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Database">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
     </Reference>
@@ -408,14 +402,20 @@
     <Reference Include="Firebase.TaskExtension">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+        <HintPath>C:\coding\SquidGame\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Analytics">
+        <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Analytics.dll</HintPath>
+    </Reference>
     <Reference Include="Google.MiniJson">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Tasks">
-        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Platform">
         <HintPath>C:\coding\SquidGame\Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Tasks">
+        <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Compat">
         <HintPath>C:\coding\SquidGame\Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
@@ -831,14 +831,23 @@
     <Reference Include="Unity.Services.Core">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+        <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+        <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core.Environments">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
         <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+        <HintPath>C:\coding\SquidGame\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

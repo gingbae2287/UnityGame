@@ -46,7 +46,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
     Hashtable state;
     //===for masterClient====
     int[] playerOrder;
-    int currentOrder, timer, voteResult, currentPlayers;
+    int currentOrder, timer, sendTime, voteResult, currentPlayers;
     bool isDBLoading, DBLoad, isGameReady, isAnswerTime, isPlaying, isReadExplanation, isVoteEnd, isVoteZoneCreate;
     DatabaseReference DBTitle;
     List<KeyValuePair<string,string>> titleList;
@@ -116,7 +116,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                         );
                     }
                 }
-                Debug.Log("dbload is truer");
                 //isGameReady=true;
                 DBLoad=true;
                 //photonView.RPC("SendList", RpcTarget.AllBufferedViaServer, titleList);
@@ -127,7 +126,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
     [PunRPC]
     void SendList(List<KeyValuePair<string, string>> TitleList){
         //list안보내짐
-        Debug.Log("db send RPC");
         titleList=TitleList;
 
         
@@ -193,7 +191,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 
             break;
             case GameState.SetLiar:
-            Debug.Log("GameStete: setliar");
                 if(!DBLoad){
                     gameState=GameState.DBLoading;
                     state["gameState"]=gameState;
@@ -233,7 +230,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 
             break;
             case GameState.StartCount:
-            Debug.Log("GameStete: startcount");
                 //Start Timer
                 while(timer>0){
                     str=timer+"초 후 게임이 시작됩니다.";
@@ -252,7 +248,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 
             break;
             case GameState.Gaming:
-            Debug.Log("GameStete: Gaming");
             //각 플레이어가 제시어 설명을 할 때마다 currentorder증가
             //각 플레이어는 제출 버튼시 마스터에게 rpc보내기
                 photonView.RPC("ClearHistoryBox",RpcTarget.AllViaServer);
@@ -275,7 +270,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
 
             break;
             case GameState.VoteTime:
-            Debug.Log("GameStete: vote time");
                 if(!isVoteEnd){
                     while(timer>=0){
                         str="라이어로 생각되는 플레이어의 발판에 들어가 투표하세요.\n";
@@ -309,7 +303,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 }
             break;
             case GameState.OneMoreTurn:
-            Debug.Log("GameStete: onemore turn");
                 photonView.RPC("VoteEnded",RpcTarget.AllBufferedViaServer,0, false);
                 while(timer>=0){
                         yield return new WaitForSeconds(1f);
@@ -323,7 +316,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
                 
             break;
             case GameState.AnswerTime:
-            Debug.Log("GameStete: answertime");
                 while(isAnswerTime && timer>=0){
                     photonView.RPC("TimerRPC",RpcTarget.AllViaServer,timer);
                     timer--;
@@ -336,7 +328,6 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
 
             break;
             case GameState.Waiting:
-            Debug.Log("GameStete: waiting");
                 while(timer>=0){
                     yield return new WaitForSeconds(1f);
                     timer--;
@@ -388,6 +379,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
         currentPlayers=CurrentPlayers;
         //플레이어 스폰 또는 플레이어번호, 라이어 변경
         playerNumber=(int)PhotonNetwork.LocalPlayer.CustomProperties["playerNumber"];
+        liarUI.SetMyOrder(playerNumber+1);
         isLiar=(bool)PhotonNetwork.LocalPlayer.CustomProperties["isLiar"];
 
         if(Player.LocalPlayerInstance!=null) return;
@@ -398,6 +390,7 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
         Hashtable hash=new Hashtable();
         hash.Add("isSpawn",true);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        GameManager.Instance.LoadingProgressFinish();
     }
     //투표존에 들어갔을때 호출
     
@@ -646,7 +639,11 @@ public class LiarGame : MonoBehaviourPunCallbacks,IPunObservable
     {
         if (stream.IsWriting && PhotonNetwork.IsMasterClient)
         {
-            stream.SendNext(timer);
+            if(sendTime!=timer) {
+                sendTime=timer;
+                stream.SendNext(timer);
+            }
+
         }
 
         else

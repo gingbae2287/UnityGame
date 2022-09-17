@@ -44,6 +44,6 @@ public class SignUp : MonoBehaviour{
 
     public void BackToSignIn(){
         if(IsSignUpOnProgress) return;
-        AuthManager.Instance.ChangeToSignIn();
+        //AuthManager.Instance.ChangeToSignIn();
     }
 }

@@ -25,10 +25,11 @@ public class ColorBlock : MonoBehaviourPun {
     }
     private void Start() {
         //photonView.RPC("ChangeColor", RpcTarget.AllViaServer,teamNumber);
-        object[] data=photonView.InstantiationData;
-        teamNumber=(int)data[0];
-        blockIdx=(int)data[1];
-        mat[0]=colorMat[teamNumber];
+        //object[] data=photonView.InstantiationData;
+        //teamNumber=(int)data[0];
+        //blockIdx=(int)data[1];
+        //mat[0]=colorMat[teamNumber];
+        teamNumber=0;
         render.materials=mat;
         
     }
@@ -57,7 +58,7 @@ public class ColorBlock : MonoBehaviourPun {
     [PunRPC]
     void ChangeColor(int TeamNumber){
         if(PhotonNetwork.IsMasterClient){
-            ColorWar.Instance.GetScore(teamNumber,-1);
+            if(teamNumber!=0)ColorWar.Instance.GetScore(teamNumber,-1);
             ColorWar.Instance.GetScore(TeamNumber);
         }
         teamNumber=TeamNumber;

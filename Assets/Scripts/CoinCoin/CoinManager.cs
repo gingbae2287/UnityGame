@@ -63,7 +63,7 @@ public class CoinManager : MonoBehaviourPun
         }
         int idx=0;
         float y=0f;
-        while(true){
+        while(CoinCoin.Instance.isGameStart){
             for(int i=0;i<maxCoins;i++){
                 /*if(!coinObjs[i].activeSelf){
                     int x=Random.Range(0,coinMap.Count);
@@ -78,8 +78,8 @@ public class CoinManager : MonoBehaviourPun
                     idx=Random.Range(0,coinMap.Count);
                     y=Random.Range(0.5f,2f);
                     Vector3 pos=new Vector3(coinMap[idx]%10*blockSize,y,coinMap[idx]/10*blockSize);
-                    coins[i].gameObject.SetActive(true);
                     coins[i].gameObject.transform.position=pos;
+                    coins[i].gameObject.SetActive(true);
                     coins[i].ActiveCoin(coinMap[idx]);
                     coinMap.RemoveAt(idx);
                     yield return new WaitForSeconds(0.7f);

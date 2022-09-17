@@ -10,6 +10,7 @@ public class Coin : MonoBehaviourPun
     int mapIndex;
     float rotateSpeed=50f;
     public int score=1;
+    Vector3 pos;
     private void Start() {
         transform.rotation=Quaternion.Euler(90,0,0);
     }
@@ -18,13 +19,21 @@ public class Coin : MonoBehaviourPun
         transform.Rotate(new Vector3(0,0,rotateSpeed*Time.deltaTime));
     }
     private void OnEnable() {
-        if(!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC("CoinActive", RpcTarget.Others,true);
+        if(PhotonNetwork.IsMasterClient){
+            score=Random.Range(0,10);
+            if(score<6) score=1;
+            else if(score<9) score=2;
+            else score=4;
+            transform.localScale=new Vector3(0.6f+0.2f*score,0.05f,0.6f+0.2f*score);
+            pos=transform.position;
+            photonView.RPC("CoinActive", RpcTarget.Others,pos,mapIndex,score);
+        }
+        
     }
     private void OnDisable() {
         mapIndex=-1;
-        if(!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC("CoinActive", RpcTarget.Others,false);
+        //if(!PhotonNetwork.IsMasterClient) return;
+        photonView.RPC("CoinActiveOff", RpcTarget.Others);
     }
     public void ActiveCoin(int mapIdx){
         mapIndex=mapIdx;
@@ -35,17 +44,27 @@ public class Coin : MonoBehaviourPun
         isActive=false;
         CoinCoin.Instance.GetScore(score);
         photonView.RPC("GetCoin",RpcTarget.MasterClient,mapIndex);
+        pos=new Vector3(5,50,5);
+        gameObject.SetActive(false);
     }
     [PunRPC]
     void GetCoin(int mapIdx){
         if(!PhotonNetwork.IsMasterClient) return;
         CoinManager.Instance.GetCoin(mapIdx);
-        transform.position=new Vector3(5,50,5);
-        gameObject.SetActive(false);
+        //transform.position=new Vector3(5,50,5);
+        //gameObject.SetActive(false);
     }
     [PunRPC]
-    void CoinActive(bool act){
-        gameObject.SetActive(act);
+    void CoinActive(Vector3 pos, int MapIdx, int Score){
+        gameObject.SetActive(true);
+        mapIndex=MapIdx;
+        transform.position=pos;
+        score=Score;
+        transform.localScale=new Vector3(0.6f+0.2f*score,0.05f,0.6f+0.2f*score);
 
+    }
+    [PunRPC]
+    void CoinActiveOff(){
+        gameObject.SetActive(false);
     }
 }

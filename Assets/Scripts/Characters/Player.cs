@@ -27,11 +27,14 @@ public class Player : MonoBehaviourPun
     [SerializeField] float speed=0.1f;
     [SerializeField] float rotateSpeed=0.1f;
     [SerializeField] float jumpPower;
+    Vector3 dirForward;
+    Vector3 movement;  
+    Vector3 dirRight;
     int jumpCount=1;      //점프 횟수 제한
     float fallingPoint=-5;
     Vector3 startPoint;
     
-    Vector3 movement;  
+    
 
     Rigidbody rigid; 
     Animator anim;
@@ -92,7 +95,9 @@ public class Player : MonoBehaviourPun
         CheckFall();
        
     }
+    //===========Move=========
     void Run(){
+        if(GameManager.Instance.pause) return;
         if(!canMove){
             runState=false;
             anim.SetInteger("RunState", 0);
@@ -111,22 +116,25 @@ public class Player : MonoBehaviourPun
             anim.SetInteger("RunState", 2);
         }
         anim.SetInteger("RunState", 2);
-        /*
-        movement.Set(hori, 0, vert);
+
+        dirForward=transform.position-mainCam.transform.position;
+        dirRight=Quaternion.AngleAxis(90, Vector3.up) * dirForward;
+        movement=(dirForward*vert + dirRight*hori);
+        movement.y=0;
         movement=movement.normalized*speed;
         rigid.MovePosition(transform.position+movement);
-        */
-        Vector3 dirForward=transform.position-mainCam.transform.position;
+        /*
         dirForward.y=0;
         dirForward=dirForward.normalized;
         Vector3 dirRight=Quaternion.AngleAxis(90, Vector3.up) * dirForward;
         movement=(dirForward*vert + dirRight*hori)/(Mathf.Abs(vert)+Mathf.Abs(hori));
-        movement*=speed;
-        rigid.MovePosition(transform.position+movement);
+        */
+       
 
     }
 
     void Turn(){
+        if(GameManager.Instance.pause) return;
         if(!canMove) return;
         if(hori==0&& vert==0) return;
         if(jump) return;
@@ -135,6 +143,7 @@ public class Player : MonoBehaviourPun
     }
 
     void Jump(){
+        if(GameManager.Instance.pause) return;
         if(!canMove) return;
         if(Input.GetButtonDown("Jump")){
             if(jump) return;
@@ -151,7 +160,7 @@ public class Player : MonoBehaviourPun
         /*
         */
     }
-
+///////////////////////////////////////
     public void GameEnd(){
         gameEnd=true;
     }

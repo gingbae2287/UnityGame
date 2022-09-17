@@ -115,6 +115,7 @@ public class CoinCoin : MonoBehaviourPun, IPunObservable{
         //Hashtable hash=new Hashtable();
         hash["isSpawn"]=true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        GameManager.Instance.LoadingProgressFinish();
     }
     void SetGameSetting(){
         if(!PhotonNetwork.IsMasterClient) return;
@@ -143,6 +144,7 @@ public class CoinCoin : MonoBehaviourPun, IPunObservable{
     }
     void CoinCoinEnd(){
         Player.LocalPlayerInstance.StopMove();
+        isGameStart=false;
         if(bestPlayer==playerNum) ui.SetNotification("You Win!");
         //점수 비교 1등 산출
         if(!PhotonNetwork.IsMasterClient) return;

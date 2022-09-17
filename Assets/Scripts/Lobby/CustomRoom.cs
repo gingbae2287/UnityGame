@@ -9,7 +9,7 @@ using Photon.Realtime;
 
 public class CustomRoom : MonoBehaviourPunCallbacks
 {
-    [SerializeField] string[] gameList;
+    string[] gameList;
     [SerializeField] GameObject playerInfo;
     [SerializeField] GameObject mainLobbyObject;
     [SerializeField] Text roomNumber;
@@ -43,6 +43,8 @@ public class CustomRoom : MonoBehaviourPunCallbacks
     new void OnEnable(){
         PhotonNetwork.AddCallbackTarget(this);
         RenewalRoom();
+        gameList=GameManager.Instance.gameList;
+
     }
     new void OnDisable() {
         PhotonNetwork.RemoveCallbackTarget(this);
@@ -146,6 +148,7 @@ public class CustomRoom : MonoBehaviourPunCallbacks
         gameName.text=gameList[gameNum];
     }
     public void StartButton(){
-        PhotonNetwork.LoadLevel(gameList[currentGame]);
+        if(!PhotonNetwork.IsMasterClient) return;
+        GameManager.Instance.GameStart(currentGame);
     }
 }

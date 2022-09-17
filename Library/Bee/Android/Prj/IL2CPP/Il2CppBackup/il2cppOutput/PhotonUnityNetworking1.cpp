@@ -1498,28 +1498,30 @@ struct PhotonRigidbodyView_t31DA73B6DCF0BFC23A208A2C349B96D5985DD768  : public M
 // Photon.Pun.PhotonTransformView
 struct PhotonTransformView_tE0EAB9A9BA789D7A8476BAA43364F9E686DC6ECA  : public MonoBehaviourPun_t64DD82CBA1C47A70448DAB2263AB90A4411621BD
 {
+	// System.Int32 Photon.Pun.PhotonTransformView::i
+	int32_t ___i_5;
 	// System.Single Photon.Pun.PhotonTransformView::m_Distance
-	float ___m_Distance_5;
+	float ___m_Distance_6;
 	// System.Single Photon.Pun.PhotonTransformView::m_Angle
-	float ___m_Angle_6;
+	float ___m_Angle_7;
 	// UnityEngine.Vector3 Photon.Pun.PhotonTransformView::m_Direction
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_Direction_7;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_Direction_8;
 	// UnityEngine.Vector3 Photon.Pun.PhotonTransformView::m_NetworkPosition
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_NetworkPosition_8;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_NetworkPosition_9;
 	// UnityEngine.Vector3 Photon.Pun.PhotonTransformView::m_StoredPosition
-	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_StoredPosition_9;
+	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___m_StoredPosition_10;
 	// UnityEngine.Quaternion Photon.Pun.PhotonTransformView::m_NetworkRotation
-	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___m_NetworkRotation_10;
+	Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 ___m_NetworkRotation_11;
 	// System.Boolean Photon.Pun.PhotonTransformView::m_SynchronizePosition
-	bool ___m_SynchronizePosition_11;
+	bool ___m_SynchronizePosition_12;
 	// System.Boolean Photon.Pun.PhotonTransformView::m_SynchronizeRotation
-	bool ___m_SynchronizeRotation_12;
+	bool ___m_SynchronizeRotation_13;
 	// System.Boolean Photon.Pun.PhotonTransformView::m_SynchronizeScale
-	bool ___m_SynchronizeScale_13;
+	bool ___m_SynchronizeScale_14;
 	// System.Boolean Photon.Pun.PhotonTransformView::m_UseLocal
-	bool ___m_UseLocal_14;
+	bool ___m_UseLocal_15;
 	// System.Boolean Photon.Pun.PhotonTransformView::m_firstTake
-	bool ___m_firstTake_15;
+	bool ___m_firstTake_16;
 };
 
 // Photon.Pun.PhotonTransformViewClassic
@@ -5958,15 +5960,15 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_Awake_m9FA866AD99581
 		NullCheck(L_0);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
 		L_1 = Transform_get_localPosition_mA9C86B990DF0685EA1061A120218993FDCC60A95(L_0, NULL);
-		__this->___m_StoredPosition_9 = L_1;
+		__this->___m_StoredPosition_10 = L_1;
 		// m_NetworkPosition = Vector3.zero;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_2;
 		L_2 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
-		__this->___m_NetworkPosition_8 = L_2;
+		__this->___m_NetworkPosition_9 = L_2;
 		// m_NetworkRotation = Quaternion.identity;
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_3;
 		L_3 = Quaternion_get_identity_m7E701AE095ED10FD5EA0B50ABCFDE2EEFF2173A5_inline(NULL);
-		__this->___m_NetworkRotation_10 = L_3;
+		__this->___m_NetworkRotation_11 = L_3;
 		// }
 		return;
 	}
@@ -5976,7 +5978,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_Reset_m5D4BE80B3E41B
 {
 	{
 		// m_UseLocal = true;
-		__this->___m_UseLocal_14 = (bool)1;
+		__this->___m_UseLocal_15 = (bool)1;
 		// }
 		return;
 	}
@@ -5986,7 +5988,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_OnEnable_m9C2946BFDA
 {
 	{
 		// m_firstTake = true;
-		__this->___m_firstTake_15 = (bool)1;
+		__this->___m_firstTake_16 = (bool)1;
 		// }
 		return;
 	}
@@ -6019,7 +6021,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_Update_mD3D053E917A6
 	}
 	{
 		// if (m_UseLocal)
-		bool L_3 = __this->___m_UseLocal_14;
+		bool L_3 = __this->___m_UseLocal_15;
 		if (!L_3)
 		{
 			goto IL_0074;
@@ -6032,8 +6034,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_Update_mD3D053E917A6
 		NullCheck(L_5);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
 		L_6 = Transform_get_localPosition_mA9C86B990DF0685EA1061A120218993FDCC60A95(L_5, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = __this->___m_NetworkPosition_8;
-		float L_8 = __this->___m_Distance_5;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = __this->___m_NetworkPosition_9;
+		float L_8 = __this->___m_Distance_6;
 		float L_9;
 		L_9 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
 		il2cpp_codegen_runtime_class_init_inline(PhotonNetwork_tBF04D378B56DDA80F9DB8E08DF87D5B532C22B99_il2cpp_TypeInfo_var);
@@ -6049,8 +6051,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_Update_mD3D053E917A6
 		NullCheck(L_13);
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_14;
 		L_14 = Transform_get_localRotation_mD53D37611A5DAE93EC6C7BBCAC337408C5CACA77(L_13, NULL);
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_15 = __this->___m_NetworkRotation_10;
-		float L_16 = __this->___m_Angle_6;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_15 = __this->___m_NetworkRotation_11;
+		float L_16 = __this->___m_Angle_7;
 		float L_17;
 		L_17 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
 		int32_t L_18;
@@ -6070,8 +6072,8 @@ IL_0074:
 		NullCheck(L_21);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_22;
 		L_22 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_21, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23 = __this->___m_NetworkPosition_8;
-		float L_24 = __this->___m_Distance_5;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23 = __this->___m_NetworkPosition_9;
+		float L_24 = __this->___m_Distance_6;
 		float L_25;
 		L_25 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
 		il2cpp_codegen_runtime_class_init_inline(PhotonNetwork_tBF04D378B56DDA80F9DB8E08DF87D5B532C22B99_il2cpp_TypeInfo_var);
@@ -6087,8 +6089,8 @@ IL_0074:
 		NullCheck(L_29);
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_30;
 		L_30 = Transform_get_rotation_m32AF40CA0D50C797DA639A696F8EAEC7524C179C(L_29, NULL);
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_31 = __this->___m_NetworkRotation_10;
-		float L_32 = __this->___m_Angle_6;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_31 = __this->___m_NetworkRotation_11;
+		float L_32 = __this->___m_Angle_7;
 		float L_33;
 		L_33 = Time_get_deltaTime_mC3195000401F0FD167DD2F948FD2BC58330D0865(NULL);
 		int32_t L_34;
@@ -6135,7 +6137,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_OnPhotonSerializeVie
 	}
 	{
 		// if (this.m_SynchronizePosition)
-		bool L_3 = __this->___m_SynchronizePosition_11;
+		bool L_3 = __this->___m_SynchronizePosition_12;
 		if (!L_3)
 		{
 			goto IL_00b1;
@@ -6143,7 +6145,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_OnPhotonSerializeVie
 	}
 	{
 		// if (m_UseLocal)
-		bool L_4 = __this->___m_UseLocal_14;
+		bool L_4 = __this->___m_UseLocal_15;
 		if (!L_4)
 		{
 			goto IL_006c;
@@ -6155,16 +6157,16 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_OnPhotonSerializeVie
 		NullCheck(L_5);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
 		L_6 = Transform_get_localPosition_mA9C86B990DF0685EA1061A120218993FDCC60A95(L_5, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = __this->___m_StoredPosition_9;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = __this->___m_StoredPosition_10;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
 		L_8 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_6, L_7, NULL);
-		__this->___m_Direction_7 = L_8;
+		__this->___m_Direction_8 = L_8;
 		// this.m_StoredPosition = tr.localPosition;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_9 = V_0;
 		NullCheck(L_9);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
 		L_10 = Transform_get_localPosition_mA9C86B990DF0685EA1061A120218993FDCC60A95(L_9, NULL);
-		__this->___m_StoredPosition_9 = L_10;
+		__this->___m_StoredPosition_10 = L_10;
 		// stream.SendNext(tr.localPosition);
 		PhotonStream_t51D26D86E501F1931A26F2CF1C7D915D690CBD2E* L_11 = ___stream0;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_12 = V_0;
@@ -6177,7 +6179,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView_OnPhotonSerializeVie
 		PhotonStream_SendNext_mC4D9796E0A8F4866B7EE983B7F161A55A2FCD5DC(L_11, L_15, NULL);
 		// stream.SendNext(this.m_Direction);
 		PhotonStream_t51D26D86E501F1931A26F2CF1C7D915D690CBD2E* L_16 = ___stream0;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17 = __this->___m_Direction_7;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_17 = __this->___m_Direction_8;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18 = L_17;
 		RuntimeObject* L_19 = Box(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var, &L_18);
 		NullCheck(L_16);
@@ -6192,16 +6194,16 @@ IL_006c:
 		NullCheck(L_20);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
 		L_21 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_20, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_22 = __this->___m_StoredPosition_9;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_22 = __this->___m_StoredPosition_10;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23;
 		L_23 = Vector3_op_Subtraction_mE42023FF80067CB44A1D4A27EB7CF2B24CABB828_inline(L_21, L_22, NULL);
-		__this->___m_Direction_7 = L_23;
+		__this->___m_Direction_8 = L_23;
 		// this.m_StoredPosition = tr.position;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_24 = V_0;
 		NullCheck(L_24);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25;
 		L_25 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_24, NULL);
-		__this->___m_StoredPosition_9 = L_25;
+		__this->___m_StoredPosition_10 = L_25;
 		// stream.SendNext(tr.position);
 		PhotonStream_t51D26D86E501F1931A26F2CF1C7D915D690CBD2E* L_26 = ___stream0;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_27 = V_0;
@@ -6214,7 +6216,7 @@ IL_006c:
 		PhotonStream_SendNext_mC4D9796E0A8F4866B7EE983B7F161A55A2FCD5DC(L_26, L_30, NULL);
 		// stream.SendNext(this.m_Direction);
 		PhotonStream_t51D26D86E501F1931A26F2CF1C7D915D690CBD2E* L_31 = ___stream0;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32 = __this->___m_Direction_7;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32 = __this->___m_Direction_8;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_33 = L_32;
 		RuntimeObject* L_34 = Box(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var, &L_33);
 		NullCheck(L_31);
@@ -6224,7 +6226,7 @@ IL_006c:
 IL_00b1:
 	{
 		// if (this.m_SynchronizeRotation)
-		bool L_35 = __this->___m_SynchronizeRotation_12;
+		bool L_35 = __this->___m_SynchronizeRotation_13;
 		if (!L_35)
 		{
 			goto IL_00e5;
@@ -6232,7 +6234,7 @@ IL_00b1:
 	}
 	{
 		// if (m_UseLocal)
-		bool L_36 = __this->___m_UseLocal_14;
+		bool L_36 = __this->___m_UseLocal_15;
 		if (!L_36)
 		{
 			goto IL_00d4;
@@ -6269,7 +6271,7 @@ IL_00d4:
 IL_00e5:
 	{
 		// if (this.m_SynchronizeScale)
-		bool L_47 = __this->___m_SynchronizeScale_13;
+		bool L_47 = __this->___m_SynchronizeScale_14;
 		if (!L_47)
 		{
 			goto IL_0282;
@@ -6292,7 +6294,7 @@ IL_00e5:
 IL_0102:
 	{
 		// if (this.m_SynchronizePosition)
-		bool L_53 = __this->___m_SynchronizePosition_11;
+		bool L_53 = __this->___m_SynchronizePosition_12;
 		if (!L_53)
 		{
 			goto IL_01cf;
@@ -6304,15 +6306,15 @@ IL_0102:
 		NullCheck(L_54);
 		RuntimeObject* L_55;
 		L_55 = PhotonStream_ReceiveNext_m364CE7D424FA3F237662BC8A89D7AA6BDA6335C0(L_54, NULL);
-		__this->___m_NetworkPosition_8 = ((*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)UnBox(L_55, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))));
+		__this->___m_NetworkPosition_9 = ((*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)UnBox(L_55, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))));
 		// this.m_Direction = (Vector3)stream.ReceiveNext();
 		PhotonStream_t51D26D86E501F1931A26F2CF1C7D915D690CBD2E* L_56 = ___stream0;
 		NullCheck(L_56);
 		RuntimeObject* L_57;
 		L_57 = PhotonStream_ReceiveNext_m364CE7D424FA3F237662BC8A89D7AA6BDA6335C0(L_56, NULL);
-		__this->___m_Direction_7 = ((*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)UnBox(L_57, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))));
+		__this->___m_Direction_8 = ((*(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)((Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)(Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2*)UnBox(L_57, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2_il2cpp_TypeInfo_var))));
 		// if (m_firstTake)
-		bool L_58 = __this->___m_firstTake_15;
+		bool L_58 = __this->___m_firstTake_16;
 		if (!L_58)
 		{
 			goto IL_0166;
@@ -6320,7 +6322,7 @@ IL_0102:
 	}
 	{
 		// if (m_UseLocal)
-		bool L_59 = __this->___m_UseLocal_14;
+		bool L_59 = __this->___m_UseLocal_15;
 		if (!L_59)
 		{
 			goto IL_014d;
@@ -6329,7 +6331,7 @@ IL_0102:
 	{
 		// tr.localPosition = this.m_NetworkPosition;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_60 = V_0;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_61 = __this->___m_NetworkPosition_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_61 = __this->___m_NetworkPosition_9;
 		NullCheck(L_60);
 		Transform_set_localPosition_mDE1C997F7D79C0885210B7732B4BA50EE7D73134(L_60, L_61, NULL);
 		goto IL_0159;
@@ -6339,7 +6341,7 @@ IL_014d:
 	{
 		// tr.position = this.m_NetworkPosition;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_62 = V_0;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_63 = __this->___m_NetworkPosition_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_63 = __this->___m_NetworkPosition_9;
 		NullCheck(L_62);
 		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_62, L_63, NULL);
 	}
@@ -6347,7 +6349,7 @@ IL_014d:
 IL_0159:
 	{
 		// this.m_Distance = 0f;
-		__this->___m_Distance_5 = (0.0f);
+		__this->___m_Distance_6 = (0.0f);
 		goto IL_01cf;
 	}
 
@@ -6363,16 +6365,16 @@ IL_0166:
 		L_66 = fabsf(((float)((double)il2cpp_codegen_subtract(L_64, L_65))));
 		V_1 = L_66;
 		// this.m_NetworkPosition += this.m_Direction * lag;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_67 = __this->___m_NetworkPosition_8;
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_68 = __this->___m_Direction_7;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_67 = __this->___m_NetworkPosition_9;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_68 = __this->___m_Direction_8;
 		float L_69 = V_1;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_70;
 		L_70 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_68, L_69, NULL);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_71;
 		L_71 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_67, L_70, NULL);
-		__this->___m_NetworkPosition_8 = L_71;
+		__this->___m_NetworkPosition_9 = L_71;
 		// if (m_UseLocal)
-		bool L_72 = __this->___m_UseLocal_14;
+		bool L_72 = __this->___m_UseLocal_15;
 		if (!L_72)
 		{
 			goto IL_01b8;
@@ -6384,10 +6386,10 @@ IL_0166:
 		NullCheck(L_73);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_74;
 		L_74 = Transform_get_localPosition_mA9C86B990DF0685EA1061A120218993FDCC60A95(L_73, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_75 = __this->___m_NetworkPosition_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_75 = __this->___m_NetworkPosition_9;
 		float L_76;
 		L_76 = Vector3_Distance_m2314DB9B8BD01157E013DF87BEA557375C7F9FF9_inline(L_74, L_75, NULL);
-		__this->___m_Distance_5 = L_76;
+		__this->___m_Distance_6 = L_76;
 		goto IL_01cf;
 	}
 
@@ -6398,16 +6400,16 @@ IL_01b8:
 		NullCheck(L_77);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_78;
 		L_78 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_77, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_79 = __this->___m_NetworkPosition_8;
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_79 = __this->___m_NetworkPosition_9;
 		float L_80;
 		L_80 = Vector3_Distance_m2314DB9B8BD01157E013DF87BEA557375C7F9FF9_inline(L_78, L_79, NULL);
-		__this->___m_Distance_5 = L_80;
+		__this->___m_Distance_6 = L_80;
 	}
 
 IL_01cf:
 	{
 		// if (this.m_SynchronizeRotation)
-		bool L_81 = __this->___m_SynchronizeRotation_12;
+		bool L_81 = __this->___m_SynchronizeRotation_13;
 		if (!L_81)
 		{
 			goto IL_025a;
@@ -6419,9 +6421,9 @@ IL_01cf:
 		NullCheck(L_82);
 		RuntimeObject* L_83;
 		L_83 = PhotonStream_ReceiveNext_m364CE7D424FA3F237662BC8A89D7AA6BDA6335C0(L_82, NULL);
-		__this->___m_NetworkRotation_10 = ((*(Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)((Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)(Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)UnBox(L_83, Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974_il2cpp_TypeInfo_var))));
+		__this->___m_NetworkRotation_11 = ((*(Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)((Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)(Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974*)UnBox(L_83, Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974_il2cpp_TypeInfo_var))));
 		// if (m_firstTake)
-		bool L_84 = __this->___m_firstTake_15;
+		bool L_84 = __this->___m_firstTake_16;
 		if (!L_84)
 		{
 			goto IL_0222;
@@ -6429,9 +6431,9 @@ IL_01cf:
 	}
 	{
 		// this.m_Angle = 0f;
-		__this->___m_Angle_6 = (0.0f);
+		__this->___m_Angle_7 = (0.0f);
 		// if (m_UseLocal)
-		bool L_85 = __this->___m_UseLocal_14;
+		bool L_85 = __this->___m_UseLocal_15;
 		if (!L_85)
 		{
 			goto IL_0214;
@@ -6440,7 +6442,7 @@ IL_01cf:
 	{
 		// tr.localRotation = this.m_NetworkRotation;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_86 = V_0;
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_87 = __this->___m_NetworkRotation_10;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_87 = __this->___m_NetworkRotation_11;
 		NullCheck(L_86);
 		Transform_set_localRotation_mAB4A011D134BA58AB780BECC0025CA65F16185FA(L_86, L_87, NULL);
 		goto IL_025a;
@@ -6450,7 +6452,7 @@ IL_0214:
 	{
 		// tr.rotation = this.m_NetworkRotation;
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_88 = V_0;
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_89 = __this->___m_NetworkRotation_10;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_89 = __this->___m_NetworkRotation_11;
 		NullCheck(L_88);
 		Transform_set_rotation_m61340DE74726CF0F9946743A727C4D444397331D(L_88, L_89, NULL);
 		goto IL_025a;
@@ -6459,7 +6461,7 @@ IL_0214:
 IL_0222:
 	{
 		// if (m_UseLocal)
-		bool L_90 = __this->___m_UseLocal_14;
+		bool L_90 = __this->___m_UseLocal_15;
 		if (!L_90)
 		{
 			goto IL_0243;
@@ -6471,10 +6473,10 @@ IL_0222:
 		NullCheck(L_91);
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_92;
 		L_92 = Transform_get_localRotation_mD53D37611A5DAE93EC6C7BBCAC337408C5CACA77(L_91, NULL);
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_93 = __this->___m_NetworkRotation_10;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_93 = __this->___m_NetworkRotation_11;
 		float L_94;
 		L_94 = Quaternion_Angle_mAADDBB3C30736B4C7B75CF3A241C1CF5E0386C26_inline(L_92, L_93, NULL);
-		__this->___m_Angle_6 = L_94;
+		__this->___m_Angle_7 = L_94;
 		goto IL_025a;
 	}
 
@@ -6485,16 +6487,16 @@ IL_0243:
 		NullCheck(L_95);
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_96;
 		L_96 = Transform_get_rotation_m32AF40CA0D50C797DA639A696F8EAEC7524C179C(L_95, NULL);
-		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_97 = __this->___m_NetworkRotation_10;
+		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_97 = __this->___m_NetworkRotation_11;
 		float L_98;
 		L_98 = Quaternion_Angle_mAADDBB3C30736B4C7B75CF3A241C1CF5E0386C26_inline(L_96, L_97, NULL);
-		__this->___m_Angle_6 = L_98;
+		__this->___m_Angle_7 = L_98;
 	}
 
 IL_025a:
 	{
 		// if (this.m_SynchronizeScale)
-		bool L_99 = __this->___m_SynchronizeScale_13;
+		bool L_99 = __this->___m_SynchronizeScale_14;
 		if (!L_99)
 		{
 			goto IL_0273;
@@ -6514,7 +6516,7 @@ IL_025a:
 IL_0273:
 	{
 		// if (m_firstTake)
-		bool L_103 = __this->___m_firstTake_15;
+		bool L_103 = __this->___m_firstTake_16;
 		if (!L_103)
 		{
 			goto IL_0282;
@@ -6522,7 +6524,7 @@ IL_0273:
 	}
 	{
 		// m_firstTake = false;
-		__this->___m_firstTake_15 = (bool)0;
+		__this->___m_firstTake_16 = (bool)0;
 	}
 
 IL_0282:
@@ -6536,9 +6538,9 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PhotonTransformView__ctor_m088F532E2D9D9
 {
 	{
 		// public bool m_SynchronizePosition = true;
-		__this->___m_SynchronizePosition_11 = (bool)1;
+		__this->___m_SynchronizePosition_12 = (bool)1;
 		// public bool m_SynchronizeRotation = true;
-		__this->___m_SynchronizeRotation_12 = (bool)1;
+		__this->___m_SynchronizeRotation_13 = (bool)1;
 		MonoBehaviourPun__ctor_m52771D9D46565807FDF72A7B6622574D38C29A55(__this, NULL);
 		return;
 	}

@@ -1206,10 +1206,6 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Collider_set_enabled();
 		Register_UnityEngine_Collider_set_enabled();
 
-		//System.Void UnityEngine.Collider::set_isTrigger(System.Boolean)
-		void Register_UnityEngine_Collider_set_isTrigger();
-		Register_UnityEngine_Collider_set_isTrigger();
-
 		//UnityEngine.Rigidbody UnityEngine.Collider::get_attachedRigidbody()
 		void Register_UnityEngine_Collider_get_attachedRigidbody();
 		Register_UnityEngine_Collider_get_attachedRigidbody();
@@ -2446,19 +2442,7 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Mesh_SetIndicesImpl();
 		Register_UnityEngine_Mesh_SetIndicesImpl();
 
-		//System.Void UnityEngine.Mesh::get_bounds_Injected(UnityEngine.Bounds&)
-		void Register_UnityEngine_Mesh_get_bounds_Injected();
-		Register_UnityEngine_Mesh_get_bounds_Injected();
-
 	//End Registrations for type : UnityEngine.Mesh
-
-	//Start Registrations for type : UnityEngine.MeshFilter
-
-		//UnityEngine.Mesh UnityEngine.MeshFilter::get_sharedMesh()
-		void Register_UnityEngine_MeshFilter_get_sharedMesh();
-		Register_UnityEngine_MeshFilter_get_sharedMesh();
-
-	//End Registrations for type : UnityEngine.MeshFilter
 
 	//Start Registrations for type : UnityEngine.MonoBehaviour
 
@@ -3090,10 +3074,6 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Renderer_get_isVisible();
 		Register_UnityEngine_Renderer_get_isVisible();
 
-		//System.Boolean UnityEngine.Renderer::get_receiveShadows()
-		void Register_UnityEngine_Renderer_get_receiveShadows();
-		Register_UnityEngine_Renderer_get_receiveShadows();
-
 		//System.Int32 UnityEngine.Renderer::get_sortingLayerID()
 		void Register_UnityEngine_Renderer_get_sortingLayerID();
 		Register_UnityEngine_Renderer_get_sortingLayerID();
@@ -3114,22 +3094,6 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Renderer_set_enabled();
 		Register_UnityEngine_Renderer_set_enabled();
 
-		//System.Void UnityEngine.Renderer::set_lightProbeUsage(UnityEngine.Rendering.LightProbeUsage)
-		void Register_UnityEngine_Renderer_set_lightProbeUsage();
-		Register_UnityEngine_Renderer_set_lightProbeUsage();
-
-		//System.Void UnityEngine.Renderer::set_probeAnchor(UnityEngine.Transform)
-		void Register_UnityEngine_Renderer_set_probeAnchor();
-		Register_UnityEngine_Renderer_set_probeAnchor();
-
-		//System.Void UnityEngine.Renderer::set_receiveShadows(System.Boolean)
-		void Register_UnityEngine_Renderer_set_receiveShadows();
-		Register_UnityEngine_Renderer_set_receiveShadows();
-
-		//System.Void UnityEngine.Renderer::set_shadowCastingMode(UnityEngine.Rendering.ShadowCastingMode)
-		void Register_UnityEngine_Renderer_set_shadowCastingMode();
-		Register_UnityEngine_Renderer_set_shadowCastingMode();
-
 		//UnityEngine.Material UnityEngine.Renderer::GetMaterial()
 		void Register_UnityEngine_Renderer_GetMaterial();
 		Register_UnityEngine_Renderer_GetMaterial();
@@ -3137,22 +3101,6 @@ void RegisterAllStrippedInternalCalls()
 		//UnityEngine.Material[] UnityEngine.Renderer::GetMaterialArray()
 		void Register_UnityEngine_Renderer_GetMaterialArray();
 		Register_UnityEngine_Renderer_GetMaterialArray();
-
-		//UnityEngine.Material[] UnityEngine.Renderer::GetSharedMaterialArray()
-		void Register_UnityEngine_Renderer_GetSharedMaterialArray();
-		Register_UnityEngine_Renderer_GetSharedMaterialArray();
-
-		//UnityEngine.Rendering.LightProbeUsage UnityEngine.Renderer::get_lightProbeUsage()
-		void Register_UnityEngine_Renderer_get_lightProbeUsage();
-		Register_UnityEngine_Renderer_get_lightProbeUsage();
-
-		//UnityEngine.Rendering.ShadowCastingMode UnityEngine.Renderer::get_shadowCastingMode()
-		void Register_UnityEngine_Renderer_get_shadowCastingMode();
-		Register_UnityEngine_Renderer_get_shadowCastingMode();
-
-		//UnityEngine.Transform UnityEngine.Renderer::get_probeAnchor()
-		void Register_UnityEngine_Renderer_get_probeAnchor();
-		Register_UnityEngine_Renderer_get_probeAnchor();
 
 	//End Registrations for type : UnityEngine.Renderer
 
@@ -3298,37 +3246,13 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Rigidbody_get_velocity_Injected();
 		Register_UnityEngine_Rigidbody_get_velocity_Injected();
 
-		//System.Void UnityEngine.Rigidbody::set_angularDrag(System.Single)
-		void Register_UnityEngine_Rigidbody_set_angularDrag();
-		Register_UnityEngine_Rigidbody_set_angularDrag();
-
 		//System.Void UnityEngine.Rigidbody::set_angularVelocity_Injected(UnityEngine.Vector3&)
 		void Register_UnityEngine_Rigidbody_set_angularVelocity_Injected();
 		Register_UnityEngine_Rigidbody_set_angularVelocity_Injected();
 
-		//System.Void UnityEngine.Rigidbody::set_collisionDetectionMode(UnityEngine.CollisionDetectionMode)
-		void Register_UnityEngine_Rigidbody_set_collisionDetectionMode();
-		Register_UnityEngine_Rigidbody_set_collisionDetectionMode();
-
 		//System.Void UnityEngine.Rigidbody::set_constraints(UnityEngine.RigidbodyConstraints)
 		void Register_UnityEngine_Rigidbody_set_constraints();
 		Register_UnityEngine_Rigidbody_set_constraints();
-
-		//System.Void UnityEngine.Rigidbody::set_drag(System.Single)
-		void Register_UnityEngine_Rigidbody_set_drag();
-		Register_UnityEngine_Rigidbody_set_drag();
-
-		//System.Void UnityEngine.Rigidbody::set_interpolation(UnityEngine.RigidbodyInterpolation)
-		void Register_UnityEngine_Rigidbody_set_interpolation();
-		Register_UnityEngine_Rigidbody_set_interpolation();
-
-		//System.Void UnityEngine.Rigidbody::set_isKinematic(System.Boolean)
-		void Register_UnityEngine_Rigidbody_set_isKinematic();
-		Register_UnityEngine_Rigidbody_set_isKinematic();
-
-		//System.Void UnityEngine.Rigidbody::set_mass(System.Single)
-		void Register_UnityEngine_Rigidbody_set_mass();
-		Register_UnityEngine_Rigidbody_set_mass();
 
 		//System.Void UnityEngine.Rigidbody::set_position_Injected(UnityEngine.Vector3&)
 		void Register_UnityEngine_Rigidbody_set_position_Injected();
@@ -3338,17 +3262,9 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Rigidbody_set_rotation_Injected();
 		Register_UnityEngine_Rigidbody_set_rotation_Injected();
 
-		//System.Void UnityEngine.Rigidbody::set_useGravity(System.Boolean)
-		void Register_UnityEngine_Rigidbody_set_useGravity();
-		Register_UnityEngine_Rigidbody_set_useGravity();
-
 		//System.Void UnityEngine.Rigidbody::set_velocity_Injected(UnityEngine.Vector3&)
 		void Register_UnityEngine_Rigidbody_set_velocity_Injected();
 		Register_UnityEngine_Rigidbody_set_velocity_Injected();
-
-		//UnityEngine.RigidbodyConstraints UnityEngine.Rigidbody::get_constraints()
-		void Register_UnityEngine_Rigidbody_get_constraints();
-		Register_UnityEngine_Rigidbody_get_constraints();
 
 	//End Registrations for type : UnityEngine.Rigidbody
 
@@ -4021,10 +3937,6 @@ void RegisterAllStrippedInternalCalls()
 		//System.Void UnityEngine.Transform::set_rotation_Injected(UnityEngine.Quaternion&)
 		void Register_UnityEngine_Transform_set_rotation_Injected();
 		Register_UnityEngine_Transform_set_rotation_Injected();
-
-		//UnityEngine.Transform UnityEngine.Transform::FindRelativeTransformWithPath(UnityEngine.Transform,System.String,System.Boolean)
-		void Register_UnityEngine_Transform_FindRelativeTransformWithPath();
-		Register_UnityEngine_Transform_FindRelativeTransformWithPath();
 
 		//UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
 		void Register_UnityEngine_Transform_GetChild();

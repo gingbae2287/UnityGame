@@ -17,6 +17,7 @@ namespace Photon.Pun
     [HelpURL("https://doc.photonengine.com/en-us/pun/v2/gameplay/synchronization-and-state")]
     public class PhotonTransformView : MonoBehaviourPun, IPunObservable
     {
+        int i;
         private float m_Distance;
         private float m_Angle;
 
@@ -82,7 +83,7 @@ namespace Photon.Pun
             if (stream.IsWriting)
             {
                 if (this.m_SynchronizePosition)
-                {
+                {   
                     if (m_UseLocal)
                     {
                         this.m_Direction = tr.localPosition - this.m_StoredPosition;
